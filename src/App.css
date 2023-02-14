@@ -6,17 +6,63 @@
   padding: 0 
 }
 
+.flex {
+  display: flex;
+}
+
+label {
+  display: block;
+  width: 100%;
+}
+
 body {
-  background: #45b08c;
+  background: white;
   margin-top: 0
 }
 
 header { 
-  background: white;
+  background: #45b08c;
   margin-top: 0;
 }
 
 #title {
-  color: black;
+  color: black; 
   margin-left: 1em;
 }
+
+.hidden {
+  display: none;
+}
+
+.pokemonImage {
+  max-width: 108px;
+  height: auto;
+}
+
+.itemImage {
+  width: 30px;
+  height: 30px;
+}
+
+.columns {
+  display: flex;
+  align-content: space-between;
+}
+
+.columns div input {
+  width: 104px;
+  height: 20px;
+}
+
+#moveOne, #moveTwo, #moveThree, #moveFour {
+  display: block;
+}
+
+.floatDownBox { 
+  margin-top:auto;
+}
+
+.error {
+  border-color: #DC143C;
+}
+
