@@ -1,5 +1,9 @@
 import { useState, useEffect } from "react";
-import ErrorList from "./ErrorList"
+import ErrorList from "./ErrorList";
+import MoveBoxes from "./MoveBoxes";
+import ItemBox from "./ItemBox";
+import PokemonBox from "./PokemonBox";
+import AbilityBox from "./AbilityBox";
 
 function BuildBox() { 
     const [pokemonImage, setPokemonImage] = useState('logo192.png'); 
@@ -8,8 +12,10 @@ function BuildBox() {
     const [abilities, setAbilities] = useState([]);
     const [errorMessages, setErrorMessages] = useState([]);
     const [moves, setMoves] = useState(new Set());
+    const [moveSet, setMoveSet] = useState(["0", "1", "2", "3"]);
 
     const [items, setItems] = useState(["data"]);
+    const [EVs, setEVs] = useState({"HP": 0 , "Atk": 0, "Def": 0, "SpA": 0, "SpD": 0 , "Spe": 0});
 
     useEffect(() => {
         const fetchItems = async () => {
@@ -33,6 +39,7 @@ function BuildBox() {
         try {
             let response = await fetch(url);
             let data = await response.json();
+
             await clearFields();
             await updateAbilities(data);
             await console.log(data);
@@ -41,6 +48,7 @@ function BuildBox() {
 
             setErrorMessages([]);
         } catch {
+            await clearFields();
             addError("Enter a valid Pokemon name");
             setPokemonImage("logo192.png");
         }
@@ -83,18 +91,54 @@ function BuildBox() {
         return true;
     }
 
-    function validateHasMove(id) {
+    function validateMove(id) {
         if (!validateHasPokemon()) {
             addError("Choose a valid Pokemon first.");
             return;
         }
 
-        let move = sanitize_text(document.getElementById("move" + id).value);
-        if (moves.has(move) || move === "") {
-            deleteError(`Pokemon does not have move ${id}`);
-            return;
+        let move = sanitize_text(document.getElementById(id).value);
+        console.log(moves.has(move) || move == ""); 
+
+        if (moves.has(move) || move === "")  {
+            deleteError(`Pokemon does not have ${id}`);
+            console.log('hasMove');
         }
-        addError(`Pokemon does not have move ${id}`);
+        
+        if (!(moves.has(move)) && move !== "") {
+            addError(`Pokemon does not have ${id}`);
+            console.log('not found');
+        }
+        
+        validateDuplicateMoves(addMove(move, id));
+    }
+
+    function addMove(move, id) {
+        let index = ["moveOne", "moveTwo", "moveThree", "moveFour"].indexOf(id);
+        console.log(index);
+        let copy = [...moveSet];
+        copy[index] = move;
+        setMoveSet(copy);
+        return copy;
+    }
+
+    function validateDuplicateMoves(currentMoveSet) {
+        console.log(currentMoveSet);
+        // remove duplicate moves from the input boxes
+        let index = 0; 
+
+        for (let move of ["moveOne", "moveTwo", "moveThree", "moveFour"]) {
+            let id = move;
+            move = sanitize_text(document.getElementById(move).value);
+
+            if (count(currentMoveSet, move) > 1) {
+                document.getElementById(id).value = "";
+                currentMoveSet[index] = "";
+                setMoveSet(currentMoveSet);
+            }
+            index++;
+        }
+        
     }
 
     function sanitize_text(text) {
@@ -104,9 +148,15 @@ function BuildBox() {
     async function clearFields() {
         let itemInput = document.getElementById("itemInput")
         itemInput.value = "bright-powder";
+        clearMoves();
         await getItemImage("itemInput");
         await setAbilities([])
         await setErrorMessages([]);
+    }
+
+    function clearMoves() {
+        for (let id of ["One", "Two", "Three", "Four"])
+            document.getElementById(`move${id}`).value ="";
     }
 
     function addError(error) {
@@ -120,68 +170,34 @@ function BuildBox() {
         for (let e of errorMessages) {
             if (e !== error) copy.push(e)
         }
+
+        console.log(copy);
         setErrorMessages(copy);
+    }
+
+    function count(array, element) {
+        let appearances = 0;
+        for (let item of array) { if (item === element) appearances++ }
+        return appearances;
     }
 
     return(
         <div className="columns">
             <div id="species" className="column is-one-quarter">
-                <img className="pokemonImage" src={pokemonImage} alt="pokemon" />
-                <label htmlFor="speciesInput">Species</label>
-                <input type="text" id="speciesInput" 
-                    onBlur={() => getPokemonImage("speciesInput")}>
-
-                </input>
+                <PokemonBox getImage={getPokemonImage} image={pokemonImage} />
             </div>
 
             <div id="item" className="column is-one-quarter flex">
-                <div className="floatDownBox">
-                    <img className="itemImage" src={itemImage} alt="pokemon" id="itemImage"/>
-                    <label htmlFor="itemInput">Item</label>
-
-                    <select id="itemInput" onChange={() => getItemImage("itemInput")}>
-                        {
-                            items.map(item => {
-                                return (<option key={item} value={item}>{item}</option>);
-                        })}
-                    </select>
-
-                </div>
+                <ItemBox items={items} itemImage={itemImage} getImage={getItemImage} />
             </div>
 
             <div id="item" className="column is-one-quarter flex">
-                <div className="floatDownBox">
-                    <label id="abilityLabel" htmlFor="abilityInput">Ability</label>
-                    {
-                        <select>
-                            {
-                                abilities.map(item => {
-                                    return (<option key={item} value={item}>{item}</option>);
-                            })}
-                        </select>
-                    }
-
-                </div>
+                <AbilityBox abilities={abilities} />
             </div>
 
             <div id="moves" className="column is-one-quarter flex">
                 <div className="floatDownBox">
-                    <h2> Moves </h2>
-                    <input onChange={() => validateHasPokemon()} onBlur={() => validateHasMove("One")}
-                        type="text" id="moveOne">
-                    </input>
-
-                    <input onChange={() => validateHasPokemon()} onBlur={() => validateHasMove("Two")}
-                        type="text" id="moveTwo">
-                    </input>
-
-                    <input onChange={() => validateHasPokemon()} onBlur={() => validateHasMove("Three")}
-                        type="text" id="moveThree">
-                    </input>
-
-                    <input onChange={() => validateHasPokemon()} onBlur={() => validateHasMove("Four")}
-                        type="text" id="moveFour">
-                    </input>
+                    <MoveBoxes hasPokemon={validateHasPokemon} hasMove={validateMove}> </MoveBoxes>
                 </div>
             </div>
             <ErrorList key="test" errors={errorMessages} />
