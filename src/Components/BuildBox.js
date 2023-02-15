@@ -1,21 +1,23 @@
 import { useState, useEffect } from "react";
 import ErrorList from "./ErrorList";
+
 import MoveBoxes from "./MoveBoxes";
 import ItemBox from "./ItemBox";
 import PokemonBox from "./PokemonBox";
 import AbilityBox from "./AbilityBox";
+import EvBoxes from "./EvBoxes";
+import SaveButton from "./SaveButton";
 
 function BuildBox() { 
     const [pokemonImage, setPokemonImage] = useState('logo192.png'); 
     const [itemImage, setItemImage] = useState('logo192.png');
 
     const [abilities, setAbilities] = useState([]);
-    const [errorMessages, setErrorMessages] = useState([]);
+    const [errorMessages, setErrorMessages] = useState(["Enter a valid Pokemon name"]);
     const [moves, setMoves] = useState(new Set());
-    const [moveSet, setMoveSet] = useState(["0", "1", "2", "3"]);
+    const [moveSet, setMoveSet] = useState([]);
 
     const [items, setItems] = useState(["data"]);
-    const [EVs, setEVs] = useState({"HP": 0 , "Atk": 0, "Def": 0, "SpA": 0, "SpD": 0 , "Spe": 0});
 
     useEffect(() => {
         const fetchItems = async () => {
@@ -52,7 +54,6 @@ function BuildBox() {
             addError("Enter a valid Pokemon name");
             setPokemonImage("logo192.png");
         }
-
     }
 
     async function getItemImage(id) {
@@ -98,16 +99,14 @@ function BuildBox() {
         }
 
         let move = sanitize_text(document.getElementById(id).value);
-        console.log(moves.has(move) || move == ""); 
+        console.log(moves.has(move) || move === ""); 
 
         if (moves.has(move) || move === "")  {
             deleteError(`Pokemon does not have ${id}`);
-            console.log('hasMove');
         }
         
         if (!(moves.has(move)) && move !== "") {
             addError(`Pokemon does not have ${id}`);
-            console.log('not found');
         }
         
         validateDuplicateMoves(addMove(move, id));
@@ -181,26 +180,40 @@ function BuildBox() {
         return appearances;
     }
 
+    function hasBlankMoveSet() {
+        for (let move of moveSet) {
+            if (moves.has(move)) return false;
+        }
+
+        return true;
+    }
+
     return(
-        <div className="columns">
-            <div id="species" className="column is-one-quarter">
-                <PokemonBox getImage={getPokemonImage} image={pokemonImage} />
-            </div>
+        <div> 
+            <div className="columns">
+                <div id="species" className="column is-one-quarter">
+                    <PokemonBox getImage={getPokemonImage} image={pokemonImage} />
+                </div>
 
-            <div id="item" className="column is-one-quarter flex">
-                <ItemBox items={items} itemImage={itemImage} getImage={getItemImage} />
-            </div>
+                <div id="item" className="column is-one-quarter flex">
+                    <ItemBox items={items} itemImage={itemImage} getImage={getItemImage} />
+                </div>
 
-            <div id="item" className="column is-one-quarter flex">
-                <AbilityBox abilities={abilities} />
-            </div>
+                <div id="item" className="column is-one-quarter flex">
+                    <AbilityBox abilities={abilities} />
+                </div>
 
-            <div id="moves" className="column is-one-quarter flex">
-                <div className="floatDownBox">
-                    <MoveBoxes hasPokemon={validateHasPokemon} hasMove={validateMove}> </MoveBoxes>
+                <div id="moves" className="column is-one-quarter flex">
+                    <div className="floatDownBox">
+                        <MoveBoxes hasPokemon={validateHasPokemon} hasMove={validateMove}> </MoveBoxes>
+                    </div>
                 </div>
             </div>
             <ErrorList key="test" errors={errorMessages} />
+            <SaveButton visible={errorMessages.length === 0 && !hasBlankMoveSet()} />
+            <div id="evs"> 
+                <EvBoxes />
+            </div>
         </div>
     )
 }
