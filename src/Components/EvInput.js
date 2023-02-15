@@ -1,6 +1,7 @@
 function EvInput(props) { 
     return(
         <div>
+            <p>{`${props.id}: `}</p>
             <input type="text" onChange={() => props.update(`${props.id}text`, props.id)} 
                 value={props.evs[props.id]} size="3" maxLength="3" id={`${props.id}text`} />
 
