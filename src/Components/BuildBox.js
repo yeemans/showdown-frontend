@@ -214,7 +214,7 @@ function BuildBox(props) {
             <SaveButton team={props.buildBoxes}  
                 visible={errorMessages.length === 0 && !hasBlankMoveSet()} />
             <div id="evs"> 
-                <EvBoxes />
+                <EvBoxes errors={errorMessages} addError={addError} deleteError={deleteError} />
             </div>
         </div>
     )
