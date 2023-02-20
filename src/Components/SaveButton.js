@@ -1,6 +1,6 @@
 function SaveButton(props) {
     function savePokemon() { 
-        let copy = [...props]
+        //let pokemonHash = {"pokemon": props.pokemon, }
         
     }
 

@@ -14,6 +14,7 @@ function BuildBox(props) {
     const [itemImage, setItemImage] = useState('logo192.png');
 
     const [abilities, setAbilities] = useState([]);
+    const [chosenAbility, setChosenAbility] = useState([]);
     const [errorMessages, setErrorMessages] = useState(["Enter a valid Pokemon name"]);
     const [moves, setMoves] = useState(new Set());
     const [moveSet, setMoveSet] = useState([]);
@@ -81,8 +82,9 @@ function BuildBox(props) {
         for (let ability of data["abilities"])
             pokemonAbilities.push(ability["ability"]["name"]);
         
-        await console.log(pokemonAbilities)
+        await console.log(pokemonAbilities);
         await setAbilities(pokemonAbilities);
+        await setChosenAbility(pokemonAbilities[0]);
     }
 
     function validateHasPokemon() {
@@ -138,7 +140,6 @@ function BuildBox(props) {
             }
             index++;
         }
-        
     }
 
     function sanitize_text(text) {
@@ -201,7 +202,7 @@ function BuildBox(props) {
                 </div>
 
                 <div id="item" className="column is-one-quarter flex">
-                    <AbilityBox abilities={abilities} />
+                    <AbilityBox abilities={abilities} updateAbility={setChosenAbility} />
                 </div>
 
                 <div id="moves" className="column is-one-quarter flex">
@@ -211,8 +212,10 @@ function BuildBox(props) {
                 </div>
             </div>
             <ErrorList key="test" errors={errorMessages} />
-            <SaveButton team={props.buildBoxes}  
+            <SaveButton team={props.buildBoxes} save={props.save} pokemon={pokemon}
+                moveSet={moveSet} ability={chosenAbility}
                 visible={errorMessages.length === 0 && !hasBlankMoveSet()} />
+
             <div id="evs"> 
                 <EvBoxes errors={errorMessages} addError={addError} deleteError={deleteError} />
             </div>

@@ -8,10 +8,10 @@ function moveBoxes(props) {
     return( 
         <div>
             <h2>Moves</h2>
-            <input onChange={() => handleChange("moveOne")} type="text" id="moveOne" />
-            <input onChange={() => handleChange("moveTwo")} type="text" id="moveTwo" />
-            <input onChange={() => handleChange("moveThree")} type="text" id="moveThree" />
-            <input onChange={() => handleChange("moveFour")} type="text" id="moveFour" />       
+            <input onBlur={() => handleChange("moveOne")} type="text" id="moveOne" />
+            <input onBlur={() => handleChange("moveTwo")} type="text" id="moveTwo" />
+            <input onBlur={() => handleChange("moveThree")} type="text" id="moveThree" />
+            <input onBlur={() => handleChange("moveFour")} type="text" id="moveFour" />       
         </div>
     )
 }
