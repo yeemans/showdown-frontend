@@ -3,7 +3,7 @@ import BuildBox from './BuildBox';
 
 function Builder() {
     const [buildBoxVisible, setBuildBoxVisible] = useState("hidden");
-    const [team, setTeam] = useState([])
+    const [team, setTeam] = useState([]);
 
     function addPokemon() { 
         setBuildBoxVisible("visible");
@@ -21,6 +21,7 @@ function Builder() {
             <div className={buildBoxVisible}>
                 <BuildBox save={save}/>
             </div>
+            {team.length};
         </div>
     )
 }

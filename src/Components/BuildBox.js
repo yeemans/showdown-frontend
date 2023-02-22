@@ -10,7 +10,8 @@ import SaveButton from "./SaveButton";
 
 function BuildBox(props) { 
     const [pokemon, setPokemon] = useState("");
-    const [pokemonImage, setPokemonImage] = useState('logo192.png'); 
+    const [pokemonImage, setPokemonImage] = useState('logo192.png');
+    const [itemName, setItemName] = useState(""); 
     const [itemImage, setItemImage] = useState('logo192.png');
 
     const [abilities, setAbilities] = useState([]);
@@ -198,7 +199,8 @@ function BuildBox(props) {
                 </div>
 
                 <div id="item" className="column is-one-quarter flex">
-                    <ItemBox items={items} itemImage={itemImage} getImage={getItemImage} />
+                    <ItemBox items={items} itemImage={itemImage} getImage={getItemImage} 
+                        setItemName={setItemName}/>
                 </div>
 
                 <div id="item" className="column is-one-quarter flex">
@@ -213,7 +215,7 @@ function BuildBox(props) {
             </div>
             <ErrorList key="test" errors={errorMessages} />
             <SaveButton team={props.buildBoxes} save={props.save} pokemon={pokemon}
-                moveSet={moveSet} ability={chosenAbility}
+                moveSet={moveSet} ability={chosenAbility} item={itemName}
                 visible={errorMessages.length === 0 && !hasBlankMoveSet()} />
 
             <div id="evs"> 
