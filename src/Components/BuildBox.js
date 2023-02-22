@@ -21,6 +21,8 @@ function BuildBox(props) {
     const [moveSet, setMoveSet] = useState([]);
 
     const [items, setItems] = useState(["data"]);
+    const [evs, setevs] = useState({"HP": 0 , "Atk": 0, "Def": 0, "SpA": 0, "SpD": 0 , "Spe": 0});
+    const [remainingEvs, setRemainingEvs] = useState(510);
 
     useEffect(() => {
         const fetchItems = async () => {
@@ -154,6 +156,23 @@ function BuildBox(props) {
         await getItemImage("itemInput");
         await setAbilities([])
         await setErrorMessages([]);
+        setevs({"HP": 0 , "Atk": 0, "Def": 0, "SpA": 0, "SpD": 0 , "Spe": 0});
+        setRemainingEvs(510);
+    }
+
+    function updateRemainingEvs(evMap) { 
+        let maximum = 510; 
+
+        for (let stat of Object.keys(evMap)) {
+            console.log(stat)
+            maximum -= evMap[stat];
+        }
+
+        setRemainingEvs(maximum);
+        if (maximum < 0)
+            addError("Too many ev's"); 
+        else 
+            deleteError(("Too many ev's"));
     }
 
     function clearMoves() {
@@ -219,7 +238,9 @@ function BuildBox(props) {
                 visible={errorMessages.length === 0 && !hasBlankMoveSet()} />
 
             <div id="evs"> 
-                <EvBoxes errors={errorMessages} addError={addError} deleteError={deleteError} />
+                <EvBoxes evs={evs} errors={errorMessages} setevs={setevs}
+                setRemainingEvs={updateRemainingEvs} remainingEvs={remainingEvs}
+                addError={addError} deleteError={deleteError} />
             </div>
         </div>
     )
