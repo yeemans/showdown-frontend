@@ -66,3 +66,7 @@ header {
   border-color: #DC143C;
 }
 
+.headerImage { 
+  width: 48px;
+  height: 48x;
+}

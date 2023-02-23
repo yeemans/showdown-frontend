@@ -1,6 +1,14 @@
 function FighterBox(props) { 
     return( 
-        <p>{props.pokemonInfo["pokemon"]}</p>
+        <div class="columns is-one-sixth"> 
+            <div> 
+                <img class="headerImage" src={props["pokemonInfo"]["image"]} 
+                    alt={props["pokemonInfo"]["pokemon"]}/>
+                <p>{props["pokemonInfo"]["pokemon"]}</p>
+              
+            </div>
+        </div>
+
     )
 }
 

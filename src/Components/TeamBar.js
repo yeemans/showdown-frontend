@@ -2,7 +2,7 @@ import FighterBox from "./FighterBox";
 
 function TeamBar(props) { 
     return(
-        <div> 
+        <div class="columns"> 
             {props.team.map(pokemon => (<FighterBox pokemonInfo={pokemon} />))} 
         </div>
     )
