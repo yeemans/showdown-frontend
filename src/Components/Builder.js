@@ -9,9 +9,9 @@ function Builder() {
         setBuildBoxVisible("visible");
     }
 
-    function save(pokemon, index) { 
+    function save(pokemonHash) { 
         let copy = [...team]; 
-        copy[index] = pokemon;
+        copy.push(pokemonHash);
         setTeam(copy);
     }
 

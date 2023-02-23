@@ -158,6 +158,7 @@ function BuildBox(props) {
         await setErrorMessages([]);
         setevs({"HP": 0 , "Atk": 0, "Def": 0, "SpA": 0, "SpD": 0 , "Spe": 0});
         setRemainingEvs(510);
+        setMoveSet([]);
     }
 
     function updateRemainingEvs(evMap) { 
