@@ -1,6 +1,5 @@
 import React, { useState} from 'react'; 
 import BuildBox from './BuildBox';
-import TeamBar from './TeamBar';
 
 function Builder() {
     const [buildBoxVisible, setBuildBoxVisible] = useState("hidden");
@@ -18,10 +17,9 @@ function Builder() {
 
     return (
         <div className="Builder">
-            <TeamBar team={team} />
             <button onClick={() => addPokemon()}>Add Pokemon</button>
             <div className={buildBoxVisible}>
-                <BuildBox save={save}/>
+                <BuildBox save={save} team={team}/>
             </div>
             {team.length}
         </div>

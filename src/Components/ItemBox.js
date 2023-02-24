@@ -1,4 +1,4 @@
-function AbilityBox(props) {
+function ItemBox(props) {
     function setItemAndImage(id) { 
         props.getImage(id); 
         props.setItemName(document.getElementById(id).value);
@@ -20,4 +20,4 @@ function AbilityBox(props) {
     )
 }
 
-export default AbilityBox;
+export default ItemBox;

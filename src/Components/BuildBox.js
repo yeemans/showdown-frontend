@@ -7,6 +7,7 @@ import PokemonBox from "./PokemonBox";
 import AbilityBox from "./AbilityBox";
 import EvBoxes from "./EvBoxes";
 import SaveButton from "./SaveButton";
+import TeamBar from './TeamBar';
 
 function BuildBox(props) { 
     const [pokemon, setPokemon] = useState("");
@@ -197,6 +198,16 @@ function BuildBox(props) {
         setErrorMessages(copy);
     }
 
+    function autoFillFields(hash) { 
+        setPokemon(hash["pokemon"]);
+        setAbilities(hash["abilities"]);
+        setChosenAbility(hash["ability"]);
+        setItemImage(hash["itemImage"]);
+        setMoves(hash["moves"]);
+        setMoveSet(hash["moveSet"]); 
+        setevs(hash["evs"]);
+    }
+
     function count(array, element) {
         let appearances = 0;
         for (let item of array) { if (item === element) appearances++ }
@@ -213,6 +224,7 @@ function BuildBox(props) {
 
     return(
         <div> 
+            <TeamBar team={props.team} autoFill={autoFillFields} />
             <div className="columns">
                 <div id="species" className="column is-one-quarter">
                     <PokemonBox updatePokemon={setPokemon} getImage={getPokemonImage} image={pokemonImage} />
@@ -220,7 +232,7 @@ function BuildBox(props) {
 
                 <div id="item" className="column is-one-quarter flex">
                     <ItemBox items={items} itemImage={itemImage} getImage={getItemImage} 
-                        setItemName={setItemName}/>
+                        setItemName={setItemName} item={itemName} />
                 </div>
 
                 <div id="item" className="column is-one-quarter flex">
@@ -235,7 +247,7 @@ function BuildBox(props) {
             </div>
             <ErrorList key="test" errors={errorMessages} />
             <SaveButton team={props.buildBoxes} save={props.save} pokemon={pokemon}
-                moveSet={moveSet} ability={chosenAbility} 
+                moveSet={moveSet} ability={chosenAbility}
                 item={itemName} image={pokemonImage} evs={evs}
                 visible={errorMessages.length === 0 && !hasBlankMoveSet()} />
 
