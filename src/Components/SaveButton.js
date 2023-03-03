@@ -1,7 +1,8 @@
 function SaveButton(props) {
     function addToTeam() {
         let info = {"pokemon": props.pokemon, "ability": props.ability, "item": props.item,
-                    "moveSet": props.moveSet, "image": props.image, "evs": props.evs};
+                    "moveSet": props.moveSet, "moves": props.moves, "image": props.image, "evs": props.evs,
+                    "abilities": props.abilities};
         props.save(info);
     }
 

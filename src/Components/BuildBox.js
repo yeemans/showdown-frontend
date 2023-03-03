@@ -200,11 +200,16 @@ function BuildBox(props) {
 
     function autoFillFields(hash) { 
         setPokemon(hash["pokemon"]);
+
         setAbilities(hash["abilities"]);
         setChosenAbility(hash["ability"]);
+
         setItemImage(hash["itemImage"]);
+        setItemName(hash["item"]);
+
         setMoves(hash["moves"]);
         setMoveSet(hash["moveSet"]); 
+        
         setevs(hash["evs"]);
     }
 
@@ -247,7 +252,7 @@ function BuildBox(props) {
             </div>
             <ErrorList key="test" errors={errorMessages} />
             <SaveButton team={props.buildBoxes} save={props.save} pokemon={pokemon}
-                moveSet={moveSet} ability={chosenAbility}
+                moves={moves} moveSet={moveSet} ability={chosenAbility} abilities={abilities}
                 item={itemName} image={pokemonImage} evs={evs}
                 visible={errorMessages.length === 0 && !hasBlankMoveSet()} />
 
