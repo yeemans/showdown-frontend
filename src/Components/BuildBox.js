@@ -25,6 +25,8 @@ function BuildBox(props) {
     const [evs, setevs] = useState({"HP": 0 , "Atk": 0, "Def": 0, "SpA": 0, "SpD": 0 , "Spe": 0});
     const [remainingEvs, setRemainingEvs] = useState(510);
 
+    const [isEditing, setIsEditing] = useState(false);
+
     useEffect(() => {
         const fetchItems = async () => {
             let item_names = []
@@ -165,10 +167,8 @@ function BuildBox(props) {
     function updateRemainingEvs(evMap) { 
         let maximum = 510; 
 
-        for (let stat of Object.keys(evMap)) {
-            console.log(stat)
+        for (let stat of Object.keys(evMap))
             maximum -= evMap[stat];
-        }
 
         setRemainingEvs(maximum);
         if (maximum < 0)
@@ -193,13 +193,12 @@ function BuildBox(props) {
         for (let e of errorMessages) {
             if (e !== error) copy.push(e)
         }
-
-        console.log(copy);
         setErrorMessages(copy);
     }
 
     function autoFillFields(hash) { 
         setPokemon(hash["pokemon"]);
+        setPokemonImage(hash["image"]);
 
         setAbilities(hash["abilities"]);
         setChosenAbility(hash["ability"]);
@@ -211,6 +210,7 @@ function BuildBox(props) {
         setMoveSet(hash["moveSet"]); 
         
         setevs(hash["evs"]);
+        updateRemainingEvs(hash["evs"]);
     }
 
     function count(array, element) {
@@ -229,7 +229,8 @@ function BuildBox(props) {
 
     return(
         <div> 
-            <TeamBar team={props.team} autoFill={autoFillFields} />
+            <TeamBar team={props.team} autoFill={autoFillFields} setIsEditing={setIsEditing} />
+
             <div className="columns">
                 <div id="species" className="column is-one-quarter">
                     <PokemonBox updatePokemon={setPokemon} getImage={getPokemonImage} image={pokemonImage} />
@@ -251,9 +252,15 @@ function BuildBox(props) {
                 </div>
             </div>
             <ErrorList key="test" errors={errorMessages} />
-            <SaveButton team={props.buildBoxes} save={props.save} pokemon={pokemon}
+            <SaveButton team={props.team} setTeam={props.setTeam} save={props.save} pokemon={pokemon}
                 moves={moves} moveSet={moveSet} ability={chosenAbility} abilities={abilities}
+
                 item={itemName} image={pokemonImage} evs={evs}
+                isEditing={isEditing} setIsEditing={setIsEditing}
+
+                currentTeamMemberIndex={props.currentTeamMemberIndex} 
+                setCurrentTeamMemberIndex={props.setCurrentTeamMemberIndex}
+
                 visible={errorMessages.length === 0 && !hasBlankMoveSet()} />
 
             <div id="evs"> 

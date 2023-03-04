@@ -18,11 +18,11 @@ function fillInFields(props) {
     console.log(hash);
     console.log(props);
     props.autoFill(hash);
+    props.setIsEditing(true);
 }
 
 function displayMoves(moves) { 
     let inputs = ["One", "Two", "Three", "Four"];
-    console.log(moves);
     for (let i = 0; i < moves.length; i++) { 
         if (moves[i] !== "" && moves[i] !== undefined) {
             document.getElementById(`move${inputs[i]}`).value = moves[i]; 
