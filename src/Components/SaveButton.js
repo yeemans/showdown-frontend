@@ -2,20 +2,19 @@ function SaveButton(props) {
     function addToTeam() {
         let info = {"pokemon": props.pokemon, "ability": props.ability, "item": props.item,
                     "moveSet": props.moveSet, "moves": props.moves, "image": props.image, "evs": props.evs,
-                    "abilities": props.abilities};
+                    "abilities": props.abilities, "teamIndex": props.teamIndex};
         props.save(info);
     }
 
     function editPokemon() {
         let info = {"pokemon": props.pokemon, "ability": props.ability, "item": props.item,
                     "moveSet": props.moveSet, "moves": props.moves, "image": props.image, "evs": props.evs,
-                    "abilities": props.abilities};
+                    "abilities": props.abilities, "teamIndex": props.teamIndex};
 
-        let teamCopy = props.team;
-        // remember that teamIndex is always one head
-        teamCopy[props.currentTeamMemberIndex - 1] = info; 
-        props.setTeam(teamCopy);
+        props.edit(info);
         props.setIsEditing(false);
+        props.clearFields();
+        props.resetPokemonAndItem();
     }
 
     function getCorrectButton() { 

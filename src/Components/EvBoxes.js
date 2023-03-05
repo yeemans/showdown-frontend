@@ -17,7 +17,7 @@ function EvBoxes(props) {
         <div>
             {
                 ["HP", "Atk", "Def", "SpA", "SpD", "Spe"].map(stat => {
-                    return (<EvInput setRemaining={props.setRemainingEvs}
+                    return (<EvInput key={stat} setRemaining={props.setRemainingEvs}
                         update={updateEv} id={stat} evs={props.evs} />);
             })}
 

@@ -4,7 +4,6 @@ import BuildBox from './BuildBox';
 function Builder() {
     const [buildBoxVisible, setBuildBoxVisible] = useState("hidden");
     const [team, setTeam] = useState([]);
-    const [currentTeamMemberIndex, setCurrentTeamMemberIndex] = useState(0);
 
     function addPokemon() { 
         setBuildBoxVisible("visible");
@@ -14,8 +13,12 @@ function Builder() {
         let copy = [...team]; 
         copy.push(pokemonHash);
         setTeam(copy);
-        // currentTeammemberIndex is always one ahead
-        setCurrentTeamMemberIndex(currentTeamMemberIndex + 1);
+    }
+
+    function edit(pokemonHash) { 
+        let copy = [...team];
+        copy[pokemonHash["teamIndex"]] = pokemonHash; 
+        setTeam(copy);
     }
 
     return (
@@ -24,8 +27,7 @@ function Builder() {
             <div className={buildBoxVisible}>
 
                 <BuildBox save={save} team={team} setTeam={setTeam} 
-                currentTeamMemberIndex={currentTeamMemberIndex} 
-                setCurrentTeamMemberIndex={setCurrentTeamMemberIndex} />
+                edit={edit} />
 
             </div>
             {team.length}

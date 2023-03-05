@@ -14,19 +14,19 @@ function fillInFields(props) {
 
     // display the moves in input boxes 
     displayMoves(hash["moveSet"]);
-
-    console.log(hash);
-    console.log(props);
     props.autoFill(hash);
     props.setIsEditing(true);
+    props.setTeamIndex(props.teamIndex);
 }
 
 function displayMoves(moves) { 
     let inputs = ["One", "Two", "Three", "Four"];
     for (let i = 0; i < moves.length; i++) { 
-        if (moves[i] !== "" && moves[i] !== undefined) {
+        if (moves[i] !== "" && moves[i] !== undefined)
             document.getElementById(`move${inputs[i]}`).value = moves[i]; 
-        }
+        else 
+            // make the move blank if pokemon has < 4 moves
+            document.getElementById(`move${inputs[i]}`).value = ""; 
     }
 }
 

@@ -3,7 +3,7 @@ function ErrorList(props) {
         <ul>
             { 
                 props.errors.map(error => (
-                    <ul>{error}</ul>
+                    <ul key={error}>{error}</ul>
                 ))
             }
         </ul>

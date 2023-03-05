@@ -12,7 +12,7 @@ import TeamBar from './TeamBar';
 function BuildBox(props) { 
     const [pokemon, setPokemon] = useState("");
     const [pokemonImage, setPokemonImage] = useState('logo192.png');
-    const [itemName, setItemName] = useState("bright-powder"); 
+    const [itemName, setItemName] = useState(""); 
     const [itemImage, setItemImage] = useState('logo192.png');
 
     const [abilities, setAbilities] = useState([]);
@@ -26,6 +26,7 @@ function BuildBox(props) {
     const [remainingEvs, setRemainingEvs] = useState(510);
 
     const [isEditing, setIsEditing] = useState(false);
+    const [teamIndex, setTeamIndex] = useState(0);
 
     useEffect(() => {
         const fetchItems = async () => {
@@ -57,6 +58,7 @@ function BuildBox(props) {
             await getPossibleMoves(data);
 
             setErrorMessages([]);
+            setIsEditing(false);
         } catch {
             await clearFields();
             addError("Enter a valid Pokemon name");
@@ -153,15 +155,20 @@ function BuildBox(props) {
     }
 
     async function clearFields() {
-        let itemInput = document.getElementById("itemInput")
-        itemInput.value = "bright-powder";
         clearMoves();
-        await getItemImage("itemInput");
-        await setAbilities([])
-        await setErrorMessages([]);
+        setAbilities([])
+        setErrorMessages([]);
+
         setevs({"HP": 0 , "Atk": 0, "Def": 0, "SpA": 0, "SpD": 0 , "Spe": 0});
         setRemainingEvs(510);
         setMoveSet([]);
+    }
+
+    function resetPokemonAndItem() { 
+        setPokemon(""); 
+        setPokemonImage("");
+        setItemName(""); 
+        setItemImage("logo192.png");
     }
 
     function updateRemainingEvs(evMap) { 
@@ -229,7 +236,8 @@ function BuildBox(props) {
 
     return(
         <div> 
-            <TeamBar team={props.team} autoFill={autoFillFields} setIsEditing={setIsEditing} />
+            <TeamBar team={props.team} autoFill={autoFillFields} setIsEditing={setIsEditing} 
+                setTeamIndex={setTeamIndex} key={JSON.stringify(props.team)} />
 
             <div className="columns">
                 <div id="species" className="column is-one-quarter">
@@ -256,10 +264,10 @@ function BuildBox(props) {
                 moves={moves} moveSet={moveSet} ability={chosenAbility} abilities={abilities}
 
                 item={itemName} image={pokemonImage} evs={evs}
-                isEditing={isEditing} setIsEditing={setIsEditing}
-
-                currentTeamMemberIndex={props.currentTeamMemberIndex} 
-                setCurrentTeamMemberIndex={props.setCurrentTeamMemberIndex}
+                isEditing={isEditing} setIsEditing={setIsEditing} edit={props.edit}
+                teamIndex={teamIndex}
+                clearFields={clearFields}
+                resetPokemonAndItem={resetPokemonAndItem}
 
                 visible={errorMessages.length === 0 && !hasBlankMoveSet()} />
 
