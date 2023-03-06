@@ -166,9 +166,11 @@ function BuildBox(props) {
 
     function resetPokemonAndItem() { 
         setPokemon(""); 
-        setPokemonImage("");
+        setPokemonImage("logo192.png");
         setItemName(""); 
         setItemImage("logo192.png");
+
+
     }
 
     function updateRemainingEvs(evMap) { 
@@ -241,7 +243,8 @@ function BuildBox(props) {
 
             <div className="columns">
                 <div id="species" className="column is-one-quarter">
-                    <PokemonBox updatePokemon={setPokemon} getImage={getPokemonImage} image={pokemonImage} />
+                    <PokemonBox updatePokemon={setPokemon} getImage={getPokemonImage} 
+                    image={pokemonImage} pokemon={pokemon} />
                 </div>
 
                 <div id="item" className="column is-one-quarter flex">
