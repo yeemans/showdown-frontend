@@ -1,4 +1,5 @@
 function fillInFields(props) { 
+    
     let info = props["pokemonInfo"];
     let imageURL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/"
 
@@ -13,13 +14,15 @@ function fillInFields(props) {
     document.getElementById("pokemonImage").src = hash["image"];
 
     // display the moves in input boxes 
-    displayMoves(hash["moveSet"]);
+    clearMoves();
+    displayMoves(props["moveSet"]);
     props.autoFill(hash);
     props.setIsEditing(true);
     props.setTeamIndex(props.teamIndex);
 }
 
 function displayMoves(moves) { 
+    console.log(moves);
     let inputs = ["One", "Two", "Three", "Four"];
     for (let i = 0; i < moves.length; i++) { 
         if (moves[i] !== "" && moves[i] !== undefined)
@@ -29,6 +32,13 @@ function displayMoves(moves) {
             document.getElementById(`move${inputs[i]}`).value = ""; 
     }
 }
+
+ 
+function clearMoves() {
+    for (let id of ["One", "Two", "Three", "Four"])
+        document.getElementById(`move${id}`).value ="";
+}
+
 
 function FighterBox(props) { 
     return( 

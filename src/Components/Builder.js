@@ -10,6 +10,7 @@ function Builder() {
     }
 
     function save(pokemonHash) { 
+        wipeMoveBoxes(); // wipe any lingering text
         let copy = [...team]; 
         copy.push(pokemonHash);
         setTeam(copy);
@@ -19,6 +20,11 @@ function Builder() {
         let copy = [...team];
         copy[pokemonHash["teamIndex"]] = pokemonHash; 
         setTeam(copy);
+    }
+
+    function wipeMoveBoxes() { 
+        for (let id of ["moveOne", "moveTwo", "moveThree", "moveFour"])
+            document.getElementById(id).value = "";
     }
 
     return (

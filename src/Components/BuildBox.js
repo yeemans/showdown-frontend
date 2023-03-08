@@ -12,8 +12,8 @@ import TeamBar from './TeamBar';
 function BuildBox(props) { 
     const [pokemon, setPokemon] = useState("");
     const [pokemonImage, setPokemonImage] = useState('logo192.png');
-    const [itemName, setItemName] = useState(""); 
-    const [itemImage, setItemImage] = useState('logo192.png');
+    const [itemName, setItemName] = useState("bright-powder"); 
+    const [itemImage, setItemImage] = useState('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/bright-powder.png');
 
     const [abilities, setAbilities] = useState([]);
     const [chosenAbility, setChosenAbility] = useState([]);
@@ -167,10 +167,8 @@ function BuildBox(props) {
     function resetPokemonAndItem() { 
         setPokemon(""); 
         setPokemonImage("logo192.png");
-        setItemName(""); 
-        setItemImage("logo192.png");
-
-
+        setItemName("bright-powder"); 
+        setItemImage("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/bright-powder.png");
     }
 
     function updateRemainingEvs(evMap) { 

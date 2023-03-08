@@ -5,7 +5,7 @@ function TeamBar(props) {
         <div className="columns"> 
             {props.team.map((pokemon, index) => (<FighterBox pokemonInfo={pokemon} key={index}
                 autoFill={props.autoFill} moves={props.moves} setIsEditing={props.setIsEditing}
-                teamIndex={index} setTeamIndex={props.setTeamIndex}
+                teamIndex={index} setTeamIndex={props.setTeamIndex} moveSet={pokemon.moveSet}
         />))}
          
         </div>
