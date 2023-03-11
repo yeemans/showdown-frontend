@@ -12,8 +12,8 @@ import TeamBar from './TeamBar';
 function BuildBox(props) { 
     const [pokemon, setPokemon] = useState("");
     const [pokemonImage, setPokemonImage] = useState('logo192.png');
-    const [itemName, setItemName] = useState("bright-powder"); 
-    const [itemImage, setItemImage] = useState('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/bright-powder.png');
+    const [itemName, setItemName] = useState("master-ball"); 
+    const [itemImage, setItemImage] = useState('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/master-ball.png');
 
     const [abilities, setAbilities] = useState([]);
     const [chosenAbility, setChosenAbility] = useState([]);
@@ -34,7 +34,7 @@ function BuildBox(props) {
             let response = await fetch("items.json");
             const json = await response.json();
     
-            for (let item of json[0]["items"])
+            for (let item of json)
                 item_names.push(item['name'])
     
             console.log(item_names);
@@ -167,8 +167,8 @@ function BuildBox(props) {
     function resetPokemonAndItem() { 
         setPokemon(""); 
         setPokemonImage("logo192.png");
-        setItemName("bright-powder"); 
-        setItemImage("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/bright-powder.png");
+        setItemName("master-ball"); 
+        setItemImage("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/master-ball.png");
     }
 
     function updateRemainingEvs(evMap) { 
@@ -247,7 +247,7 @@ function BuildBox(props) {
 
                 <div id="item" className="column is-one-quarter flex">
                     <ItemBox items={items} itemImage={itemImage} getImage={getItemImage} 
-                        setItemName={setItemName} item={itemName} />
+                        setItemName={setItemName} item={itemName} pokemon={pokemon} />
                 </div>
 
                 <div id="item" className="column is-one-quarter flex">

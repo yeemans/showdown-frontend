@@ -4,6 +4,8 @@ function SaveButton(props) {
                     "moveSet": props.moveSet, "moves": props.moves, "image": props.image, "evs": props.evs,
                     "abilities": props.abilities, "teamIndex": props.teamIndex};
         props.save(info);
+        props.clearFields(); 
+        props.resetPokemonAndItem();
     }
 
     function editPokemon() {

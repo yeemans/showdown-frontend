@@ -27,6 +27,14 @@ function Builder() {
             document.getElementById(id).value = "";
     }
 
+    function saveTeamToLocalStorage(team) { 
+        if (localStorage.getItem("numberOfTeams") === null) 
+            window.localStorage.setItem("myObject", 0);
+
+        let teamCount = localStorage.getItem("numberOfTeams");
+        window.localStorage.setItem(`team${teamCount}`, JSON.stringify(team));
+    }
+
     return (
         <div className="Builder">
             <button onClick={() => addPokemon()}>Add Pokemon</button>
