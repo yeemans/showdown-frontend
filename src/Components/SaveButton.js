@@ -32,8 +32,10 @@ function SaveButton(props) {
 
 
     return (
-        <div className={show}>
-            {getCorrectButton()}
+        <div>
+            <div className={show}>
+                {getCorrectButton()}
+            </div>
         </div>
     )
 }

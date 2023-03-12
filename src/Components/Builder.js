@@ -28,10 +28,14 @@ function Builder() {
     }
 
     function saveTeamToLocalStorage(team) { 
-        if (localStorage.getItem("numberOfTeams") === null) 
-            window.localStorage.setItem("myObject", 0);
-
         let teamCount = localStorage.getItem("numberOfTeams");
+        if (teamCount === null)
+            teamCount = 0
+        else  
+            teamCount++;
+        
+        window.localStorage.setItem("numberOfTeams", teamCount);
+        console.log("teamcount: " + teamCount);
         window.localStorage.setItem(`team${teamCount}`, JSON.stringify(team));
     }
 
@@ -41,7 +45,7 @@ function Builder() {
             <div className={buildBoxVisible}>
 
                 <BuildBox save={save} team={team} setTeam={setTeam} 
-                edit={edit} />
+                edit={edit} saveTeamToLocalStorage={saveTeamToLocalStorage} />
 
             </div>
             {team.length}

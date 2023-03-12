@@ -8,6 +8,7 @@ import AbilityBox from "./AbilityBox";
 import EvBoxes from "./EvBoxes";
 import SaveButton from "./SaveButton";
 import TeamBar from './TeamBar';
+import SuccessMessage from './SuccessMessage';
 
 function BuildBox(props) { 
     const [pokemon, setPokemon] = useState("");
@@ -27,6 +28,8 @@ function BuildBox(props) {
 
     const [isEditing, setIsEditing] = useState(false);
     const [teamIndex, setTeamIndex] = useState(0);
+
+    const [message, setMessage] = useState("");
 
     useEffect(() => {
         const fetchItems = async () => {
@@ -236,8 +239,12 @@ function BuildBox(props) {
 
     return(
         <div> 
+            <SuccessMessage message={message} />
             <TeamBar team={props.team} autoFill={autoFillFields} setIsEditing={setIsEditing} 
-                setTeamIndex={setTeamIndex} key={JSON.stringify(props.team)} />
+                setTeamIndex={setTeamIndex} key={JSON.stringify(props.team)} 
+                
+                saveTeamToLocalStorage={props.saveTeamToLocalStorage} 
+                setMessage={setMessage}/>
 
             <div className="columns">
                 <div id="species" className="column is-one-quarter">
