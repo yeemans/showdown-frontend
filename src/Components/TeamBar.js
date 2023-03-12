@@ -17,8 +17,8 @@ function TeamBar(props) {
                 autoFill={props.autoFill} moves={props.moves} setIsEditing={props.setIsEditing}
                 teamIndex={index} setTeamIndex={props.setTeamIndex} moveSet={pokemon.moveSet}
         />))}
-        {saveToLocalStorageButton()}
-         
+            {saveToLocalStorageButton()}
+            <a href="teams">My Teams</a>
         </div>
     )
 }

@@ -242,7 +242,7 @@ function BuildBox(props) {
             <SuccessMessage message={message} />
             <TeamBar team={props.team} autoFill={autoFillFields} setIsEditing={setIsEditing} 
                 setTeamIndex={setTeamIndex} key={JSON.stringify(props.team)} 
-                
+
                 saveTeamToLocalStorage={props.saveTeamToLocalStorage} 
                 setMessage={setMessage}/>
 
@@ -267,6 +267,7 @@ function BuildBox(props) {
                     </div>
                 </div>
             </div>
+            
             <ErrorList key="test" errors={errorMessages} />
             <SaveButton team={props.team} setTeam={props.setTeam} save={props.save} pokemon={pokemon}
                 moves={moves} moveSet={moveSet} ability={chosenAbility} abilities={abilities}
