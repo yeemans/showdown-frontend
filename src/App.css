@@ -70,3 +70,7 @@ header {
   width: 48px;
   height: 48x;
 }
+
+.inline {
+  display:inline
+}
