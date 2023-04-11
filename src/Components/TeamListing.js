@@ -5,7 +5,7 @@ function TeamListing(props) {
                 props.team.map(pokemon => { 
                     return(
                         <span>
-                            <img class="inline headerImage" src={pokemon["image"]}></img>
+                            <img className="inline headerImage" src={pokemon["image"]}></img>
                         </span>
                     )
                 })

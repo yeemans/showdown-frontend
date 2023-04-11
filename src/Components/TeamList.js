@@ -14,7 +14,7 @@ function TeamList() {
     }
 
     return( 
-        <div> 
+        <div className="centered"> 
             {
                 getTeamObjects().map(team => {
                     return <TeamListing id={team[1]} key={team[1]} team={team[0]} />;

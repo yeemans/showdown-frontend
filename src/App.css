@@ -74,3 +74,8 @@ header {
 .inline {
   display:inline
 }
+
+.centered { 
+  width: 80%; 
+  margin:auto;
+}

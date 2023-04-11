@@ -27,13 +27,16 @@ function Builder() {
             document.getElementById(id).value = "";
     }
 
-    function saveTeamToLocalStorage(team) { 
-        let teamCount = localStorage.getItem("numberOfTeams");
-        if (teamCount === null)
-            teamCount = 0
-        else  
-            teamCount++;
-        
+    function saveTeamToLocalStorage(team, teamIndex) { 
+        let teamCount = teamIndex;
+        if (teamIndex === undefined) {
+            teamCount = localStorage.getItem("numberOfTeams");
+            if (teamCount === null)
+                teamCount = 0
+            else  
+                teamCount++;
+        }
+
         window.localStorage.setItem("numberOfTeams", teamCount);
         console.log("teamcount: " + teamCount);
         window.localStorage.setItem(`team${teamCount}`, JSON.stringify(team));
