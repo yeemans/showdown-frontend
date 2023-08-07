@@ -11,6 +11,7 @@ import TeamBar from './TeamBar';
 import SuccessMessage from './SuccessMessage';
 
 function BuildBox(props) { 
+    const [allPokemon, setAllPokemon] = useState(new Set()) 
     const [pokemon, setPokemon] = useState("");
     const [pokemonImage, setPokemonImage] = useState('logo192.png');
     const [itemName, setItemName] = useState("master-ball"); 
@@ -32,7 +33,7 @@ function BuildBox(props) {
     const [message, setMessage] = useState("");
 
     useEffect(() => {
-        const fetchItems = async () => {
+        const fetchItems = async() => {
             let item_names = []
             let response = await fetch("items.json");
             const json = await response.json();
@@ -43,8 +44,21 @@ function BuildBox(props) {
             setItems(item_names);
           }
 
+          const fetchAllPokemon = async() => {
+            let url = "https://pokeapi.co/api/v2/pokemon?limit=20000"
+            let response = await fetch(url)
+            const json = await response.json()
+            let allNames = new Set()
+            for (let response of json["results"])
+                allNames.add(response["name"])
+
+            console.log(allNames)
+            setAllPokemon(allNames)
+          }
+
           fetchItems();
-      }, []);
+          fetchAllPokemon();
+    }, []);
 
     async function getPokemonImage(id) { 
         let input = sanitize_text(document.getElementById(id).value);
@@ -60,7 +74,6 @@ function BuildBox(props) {
             getPossibleMoves(data);
 
             setErrorMessages([]);
-            setIsEditing(false);
         } catch {
             clearFields();
             addError("Enter a valid Pokemon name");
@@ -80,11 +93,13 @@ function BuildBox(props) {
 
     async function getPossibleMoves(data) {
         let possibleMoves = new Set()
+        console.log(data["moves"])
         for (let move of data["moves"]) {
             possibleMoves.add(move["move"]["name"]);
         }
 
         setMoves(possibleMoves);
+        return possibleMoves
     }
 
     async function updateAbilities(data) {
@@ -97,9 +112,20 @@ function BuildBox(props) {
         await setChosenAbility(pokemonAbilities[0]);
     }
 
+    function updatePokemon(e) {
+        let species = sanitize_text(e.target.value)
+        console.log("species: " + species)
+        if (!(allPokemon.has(species))) 
+            addError("Enter a valid Pokemon name")
+        else
+            deleteError("Enter a valid Pokemon name")
+
+        setPokemon(species)
+    }
+
     function validateHasPokemon() {
         if (pokemonImage === "logo192.png") {
-            addError("Choose a valid Pokemon first.");
+            addError("Enter a valid Pokemon name");
             return false;
         }
         return true;
@@ -107,18 +133,19 @@ function BuildBox(props) {
 
     function validateMove(id) {
         if (!validateHasPokemon()) {
-            addError("Choose a valid Pokemon first.");
+            addError("Enter a valid Pokemon name");
             return;
         }
 
         let move = sanitize_text(document.getElementById(id).value);
-        console.log(moves.hasOwnProperty(move) || move === ""); 
+        console.log([typeof(moves), moves])
+        console.log(moves.has(move) || move === ""); 
 
-        if (moves.hasOwnProperty(move) || move === "")  {
+        if (moves.has(move) || move === "")  {
             deleteError(`Pokemon does not have ${id}`);
         }
         
-        if (!(moves.hasOwnProperty(move)) && move !== "") {
+        if (!(moves.has(move)) && move !== "") {
             addError(`Pokemon does not have ${id}`);
         }
         
@@ -215,6 +242,7 @@ function BuildBox(props) {
         setItemImage(hash["itemImage"]);
         setItemName(hash["item"]);
 
+        console.log(hash["moves"])
         setMoves(hash["moves"]);
         setMoveSet(hash["moveSet"]); 
         
@@ -239,12 +267,12 @@ function BuildBox(props) {
                 setTeamIndex={setTeamIndex} key={JSON.stringify(props.team)} 
 
                 saveTeamToLocalStorage={props.saveTeamToLocalStorage} 
-                setMessage={setMessage}/>
+                setMessage={setMessage} getPossibleMoves={getPossibleMoves} />
 
             <div className={props.visible}>
                 <div className="columns">
                     <div id="species" className="column is-one-quarter">
-                        <PokemonBox updatePokemon={setPokemon} getImage={getPokemonImage} 
+                        <PokemonBox updatePokemon={updatePokemon} getImage={getPokemonImage} 
                         image={pokemonImage} pokemon={pokemon} />
                     </div>
 

@@ -45,18 +45,30 @@ function Builder() {
     }
 
     function saveTeamToLocalStorage(team, teamIndex) { 
-        let teamCount = teamIndex;
-        if (teamIndex === undefined) {
-            teamCount = localStorage.getItem("numberOfTeams");
-            if (teamCount === null)
-                teamCount = 0
-            else  
-                teamCount++;
+        let teamId = teamIndex;
+        let teamCount;
+        // do not change teamCount if we are editing a team
+        if (location.state !== null && "editTeamId" in location.state) {
+            teamId = location.state["editTeamId"]
+            teamCount = localStorage.getItem("numberOfTeams")
         }
 
+        else if (teamIndex === undefined) {
+            teamCount = localStorage.getItem("numberOfTeams");
+            if (teamCount === null || teamCount === undefined)
+                teamCount = 0
+            else  
+                teamId++
+
+            console.log(teamCount)
+            teamId = "team" + teamCount
+        }
+
+        // slice the first four characters of teamId to find the number of teams
+        console.log(teamCount + ', ' + teamId)
         window.localStorage.setItem("numberOfTeams", teamCount);
-        console.log("teamcount: " + teamCount);
-        window.localStorage.setItem(`team${teamCount}`, JSON.stringify(team));
+        console.log("teamcount: " + teamId);
+        window.localStorage.setItem(teamId, JSON.stringify(team));
     }
 
     return (

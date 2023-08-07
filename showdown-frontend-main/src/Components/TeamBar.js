@@ -16,6 +16,7 @@ function TeamBar(props) {
             {props.team.map((pokemon, index) => (<FighterBox pokemonInfo={pokemon} key={index}
                 autoFill={props.autoFill} moves={props.moves} setIsEditing={props.setIsEditing}
                 teamIndex={index} setTeamIndex={props.setTeamIndex} moveSet={pokemon.moveSet}
+                getPossibleMoves={props.getPossibleMoves}
         />))}
             {saveToLocalStorageButton()}
             <a href="teams">My Teams</a>

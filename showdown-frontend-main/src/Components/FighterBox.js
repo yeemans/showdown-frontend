@@ -1,10 +1,26 @@
-function fillInFields(props) { 
+async function getPokemonData(pokemon) {
+    // get data for pokemon from api
+    pokemon = pokemon.replaceAll(" ", "-").toLowerCase(); // replace spaces with dashes
+    let url = `https://pokeapi.co/api/v2/pokemon/${pokemon}`.toLowerCase();
+    let response = await fetch(url);
+    let data = await response.json()
+
+    return data;
+}
+
+async function fillInFields(props) { 
     let info = props["pokemonInfo"];
     let imageURL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/"
 
+    // ping api for possible moves of the pokemon first
+    let data = await getPokemonData(info.pokemon)
+    console.log(data)
+    let moves = await(props.getPossibleMoves(data))
+    console.log(moves);
+
     let hash = {"pokemon": info.pokemon, "image": info.image, "ability": info.ability, 
     "item": info.item, "abilities": info.abilities, "itemImage": imageURL + info.item + ".png", 
-    "moves": info.moves, "moveSet": info.moveSet, "evs": info.evs};
+    "moves": moves, "moveSet": info.moveSet, "evs": info.evs};
     
     document.getElementById("speciesInput").value = hash["pokemon"];
     document.getElementById("itemInput").value = hash["item"];
