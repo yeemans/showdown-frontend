@@ -47,6 +47,9 @@ function Builder() {
     function saveTeamToLocalStorage(team, teamIndex) { 
         let teamId = teamIndex;
         let teamCount;
+
+        console.log(location.state)
+        console.log(teamIndex)
         // do not change teamCount if we are editing a team
         if (location.state !== null && "editTeamId" in location.state) {
             teamId = location.state["editTeamId"]
@@ -54,11 +57,11 @@ function Builder() {
         }
 
         else if (teamIndex === undefined) {
-            teamCount = localStorage.getItem("numberOfTeams");
+            teamCount = +localStorage.getItem("numberOfTeams");
             if (teamCount === null || teamCount === undefined)
                 teamCount = 0
             else  
-                teamId++
+                teamCount++
 
             console.log(teamCount)
             teamId = "team" + teamCount
