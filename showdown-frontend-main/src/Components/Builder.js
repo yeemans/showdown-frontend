@@ -3,7 +3,6 @@ import BuildBox from './BuildBox';
 import { useLocation } from 'react-router-dom'
 
 function Builder() {
-    const [buildBoxVisible, setBuildBoxVisible] = useState("hidden");
     const [team, setTeam] = useState([]);
     const location = useLocation()
 
@@ -12,7 +11,6 @@ function Builder() {
             console.log(location)
             if ("editTeamId" in location.state) {
                 setTeam(JSON.parse(location.state["team"]))
-                setBuildBoxVisible("visible")
             }
         }
     }, [location])
@@ -20,10 +18,6 @@ function Builder() {
     function getTitle() {
         if (location.state !== null && "editTeamId" in location.state) return <h1>Edit Team</h1>
         return <h1>Create a Team</h1>
-    }
-
-    function addPokemon() { 
-        setBuildBoxVisible("visible");
     }
 
     function save(pokemonHash) { 
@@ -77,12 +71,9 @@ function Builder() {
     return (
         <div className="Builder">
             {getTitle()}
-            <button onClick={() => addPokemon()}>Add Pokemon</button>
             <div>
-
                 <BuildBox save={save} team={team} setTeam={setTeam} 
-                edit={edit} saveTeamToLocalStorage={saveTeamToLocalStorage} visible={buildBoxVisible} />
-
+                edit={edit} saveTeamToLocalStorage={saveTeamToLocalStorage} />
             </div>
         </div>
     )

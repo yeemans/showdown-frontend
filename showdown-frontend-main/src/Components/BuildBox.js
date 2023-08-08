@@ -63,6 +63,8 @@ function BuildBox(props) {
     async function getPokemonImage(id) { 
         let input = sanitize_text(document.getElementById(id).value);
         let url = `https://pokeapi.co/api/v2/pokemon/${input}`.toLowerCase();
+        if (!allPokemon.has(input)) return; //  error, this is not a valid pokemon
+        
         try {
             let response = await fetch(url);
             let data = await response.json();
@@ -124,7 +126,7 @@ function BuildBox(props) {
     }
 
     function validateHasPokemon() {
-        if (pokemonImage === "logo192.png") {
+        if (!(allPokemon.has(pokemon))) {
             addError("Enter a valid Pokemon name");
             return false;
         }
@@ -248,6 +250,9 @@ function BuildBox(props) {
         
         setevs(hash["evs"]);
         updateRemainingEvs(hash["evs"]);
+
+        // delete the name error, since only valid pokemon can be saved
+        deleteError("Enter a valid Pokemon name")
     }
 
     function count(array, element) {
@@ -269,7 +274,7 @@ function BuildBox(props) {
                 saveTeamToLocalStorage={props.saveTeamToLocalStorage} 
                 setMessage={setMessage} getPossibleMoves={getPossibleMoves} />
 
-            <div className={props.visible}>
+            <div>
                 <div className="columns">
                     <div id="species" className="column is-one-quarter">
                         <PokemonBox updatePokemon={updatePokemon} getImage={getPokemonImage} 
