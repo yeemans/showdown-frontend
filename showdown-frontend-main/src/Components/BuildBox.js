@@ -63,13 +63,12 @@ function BuildBox(props) {
     async function getPokemonImage(id) { 
         let input = sanitize_text(document.getElementById(id).value);
         let url = `https://pokeapi.co/api/v2/pokemon/${input}`.toLowerCase();
-        if (!allPokemon.has(input)) return; //  error, this is not a valid pokemon
-        
+
         try {
+            clearFields();
             let response = await fetch(url);
             let data = await response.json();
 
-            clearFields();
             updateAbilities(data);
             console.log(data);
             setPokemonImage(data["sprites"]["front_default"])
