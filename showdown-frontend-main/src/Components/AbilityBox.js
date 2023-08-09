@@ -11,7 +11,7 @@ function AbilityBox(props) {
             <select id="abilityInput" onChange={setAbility}>
                 {
                     props.abilities.map(item => {
-                        return (<option key={item} value={item}>{item}</option>);
+                        return (<option key={props.pokemon + item} value={item}>{item}</option>);
                 })}
             </select>
         }

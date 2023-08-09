@@ -17,6 +17,7 @@ async function fillInFields(props) {
     console.log(data)
     let moves = await(props.getPossibleMoves(data))
     console.log(moves);
+    console.log(info.abiltiies)
 
     let hash = {"pokemon": info.pokemon, "image": info.image, "ability": info.ability, 
     "item": info.item, "abilities": info.abilities, "itemImage": imageURL + info.item + ".png", 
@@ -47,7 +48,6 @@ function displayMoves(moves) {
             document.getElementById(`move${inputs[i]}`).value = ""; 
     }
 }
-
  
 function clearMoves() {
     for (let id of ["One", "Two", "Three", "Four"])

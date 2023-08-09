@@ -186,8 +186,10 @@ function BuildBox(props) {
 
     async function clearFields() {
         clearMoves();
-        setAbilities([])
+        setAbilities([]);
         setErrorMessages([]);
+        setItemName("master-ball"); 
+        setItemImage('https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/master-ball.png');
 
         setevs({"HP": 0 , "Atk": 0, "Def": 0, "SpA": 0, "SpD": 0 , "Spe": 0});
         setRemainingEvs(510);
@@ -264,6 +266,26 @@ function BuildBox(props) {
         return moveSet.length === 0
     }
 
+    function deletePokemon() {
+        setIsEditing(false);
+        let copy = []
+        for (let teamMember of props.team) {
+            if (teamMember["pokemon"] != pokemon) 
+                copy.push(teamMember)
+        }
+
+        props.setTeam(copy)
+        // reset pokemon fields
+        clearFields()
+        setPokemon("")
+        setPokemonImage("logo192.png")
+    }
+
+    function getDeleteButton() {
+        if (!(allPokemon.has(pokemon))) return // return no button, nothing to delete
+        return <button onClick={() => deletePokemon() }>Delete</button>
+    }
+    
     return(
         <div> 
             <SuccessMessage message={message} />
@@ -282,11 +304,11 @@ function BuildBox(props) {
 
                     <div id="item" className="column is-one-quarter flex">
                         <ItemBox items={items} itemImage={itemImage} getImage={getItemImage} 
-                            setItemName={setItemName} item={itemName} pokemon={pokemon} />
+                            setItemName={setItemName} item={itemName} pokemon={pokemon} key={itemName} />
                     </div>
 
                     <div id="item" className="column is-one-quarter flex">
-                        <AbilityBox abilities={abilities} updateAbility={setChosenAbility} />
+                        <AbilityBox abilities={abilities} updateAbility={setChosenAbility} pokemon={pokemon} />
                     </div>
 
                     <div id="moves" className="column is-one-quarter flex">
@@ -314,6 +336,7 @@ function BuildBox(props) {
                     setRemainingEvs={updateRemainingEvs} remainingEvs={remainingEvs}
                     addError={addError} deleteError={deleteError} />
                 </div>
+                {getDeleteButton()}
             </div>
         </div>
     )

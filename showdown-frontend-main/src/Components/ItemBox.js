@@ -12,7 +12,7 @@ function ItemBox(props) {
             <select id="itemInput" value={props.item} onChange={() => setItemAndImage("itemInput")}>
                 {
                     props.items.map(item => {
-                        return (<option  value={item}>{item}</option>);
+                        return (<option value={item}>{item}</option>);
                 })}
             </select>
 
