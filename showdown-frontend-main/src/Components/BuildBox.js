@@ -108,6 +108,8 @@ function BuildBox(props) {
         for (let ability of data["abilities"])
             pokemonAbilities.push(ability["ability"]["name"]);
         
+        // sometimes an ability can get pushed twice because of api errors
+        pokemonAbilities = Array.from(new Set(pokemonAbilities))
         await console.log(pokemonAbilities);
         await setAbilities(pokemonAbilities);
         await setChosenAbility(pokemonAbilities[0]);
@@ -285,7 +287,7 @@ function BuildBox(props) {
         if (!(allPokemon.has(pokemon))) return // return no button, nothing to delete
         return <button onClick={() => deletePokemon() }>Delete</button>
     }
-    
+
     return(
         <div> 
             <SuccessMessage message={message} />
