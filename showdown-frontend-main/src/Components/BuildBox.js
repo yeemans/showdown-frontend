@@ -298,7 +298,7 @@ function BuildBox(props) {
 
                 saveTeamToLocalStorage={props.saveTeamToLocalStorage} 
                 setMessage={setMessage} getPossibleMoves={getPossibleMoves} setTeams={props.setTeams} 
-                getTeams={props.getTeams} />
+                getTeams={props.getTeams} editingTeam={props.editingTeam} />
 
             <div>
                 <div className="columns">

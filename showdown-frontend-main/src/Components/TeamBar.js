@@ -6,7 +6,8 @@ function TeamBar(props) {
         props.setMessage("Team saved!");
         let teams = props.getTeams();
 
-        teams.push(team);
+        // this line adds the team to the screen when making a new team
+        if (!props.editingTeam) teams.push(team);
         console.log(teams);
         props.setTeams(teams);
     } 

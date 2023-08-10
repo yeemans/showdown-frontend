@@ -7,10 +7,13 @@ function Builder() {
     const [team, setTeam] = useState([]);
     const [teams, setTeams] = useState([]);
     const teamCount = localStorage.getItem("numberOfTeams");
-    const location = useLocation()
+    const location = useLocation();
+    const [editingTeam, setEditingTeam] = useState(false)
+    
 
     useEffect(() => {
         setTeams(getTeams())
+        setEditingTeam(location.state !== null && "editTeamId" in location.state)
     }, [])
     
     function getTeams() {
@@ -31,16 +34,13 @@ function Builder() {
     }
 
     useEffect(() => {
-        if (location.state !== null) {
-            console.log(location)
-            if ("editTeamId" in location.state) {
-                setTeam(JSON.parse(location.state["team"]))
-            }
+        if (location.state !== null && "editTeamId" in location.state) {
+            setTeam(JSON.parse(location.state["team"]))
         }
     }, [location])
 
     function getTitle() {
-        if (location.state !== null && "editTeamId" in location.state) return <h1>Edit Team</h1>
+        if (editingTeam) return <h1>Edit Team</h1>
         return <h1>Create a Team</h1>
     }
 
@@ -67,12 +67,12 @@ function Builder() {
         let teamCount;
 
         // do not change teamCount if we are editing a team
-        if (location.state !== null && "editTeamId" in location.state) {
+        if (editingTeam) {
             teamId = location.state["editTeamId"]
-            teamCount = localStorage.getItem("numberOfTeams")
+            teamCount = +localStorage.getItem("numberOfTeams")
         }
 
-        else if (teamIndex === undefined) {
+        else {
             // increment teamCount to create a unique teamID
             teamCount = +localStorage.getItem("numberOfTeams");
             if (teamCount === null || teamCount === undefined)
@@ -90,13 +90,16 @@ function Builder() {
         return [team, teamId];
     }
 
+
     return (
         <div className="Builder">
             {getTitle()}
             <div>
+                <button onClick={() => setEditingTeam(false)}>Create New Team</button>
                 <BuildBox save={save} team={team} setTeam={setTeam} setTeams={setTeams}
-                getTeams={getTeams}
-                edit={edit} saveTeamToLocalStorage={saveTeamToLocalStorage} />
+                getTeams={getTeams} edit={edit} 
+                saveTeamToLocalStorage={saveTeamToLocalStorage} editingTeam={editingTeam} />
+
                 <TeamList teams={teams} deleteTeam={deleteTeam} />
             </div>
         </div>
