@@ -20,6 +20,7 @@ function TeamListing(props) {
             <Link to="/builder" state={{ editTeamId: props.id, team: JSON.stringify(props.team)}}>
                 Edit
             </Link>
+            <button onClick={() => props.deleteTeam(props.id)}>Delete</button>
         </div>
     )
 }

@@ -123,6 +123,8 @@ function BuildBox(props) {
         else
             deleteError("Enter a valid Pokemon name")
 
+        // get names of all pokemon in team
+
         setPokemon(species)
     }
 

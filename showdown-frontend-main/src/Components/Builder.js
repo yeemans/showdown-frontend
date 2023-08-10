@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'; 
 import BuildBox from './BuildBox';
 import { useLocation } from 'react-router-dom'
+import TeamList from './TeamList';
 
 function Builder() {
     const [team, setTeam] = useState([]);
@@ -74,6 +75,7 @@ function Builder() {
             <div>
                 <BuildBox save={save} team={team} setTeam={setTeam} 
                 edit={edit} saveTeamToLocalStorage={saveTeamToLocalStorage} />
+                <TeamList />
             </div>
         </div>
     )
