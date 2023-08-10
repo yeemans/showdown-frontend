@@ -7,7 +7,7 @@ function TeamBar(props) {
         let teams = props.getTeams();
 
         // this line adds the team to the screen when making a new team
-        if (!props.editingTeam) teams.push(team);
+        //if (!props.editingTeam) teams.push(team);
         console.log(teams);
         props.setTeams(teams);
     } 

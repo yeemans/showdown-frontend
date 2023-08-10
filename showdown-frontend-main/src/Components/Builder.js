@@ -6,18 +6,17 @@ import TeamList from './TeamList';
 function Builder() {
     const [team, setTeam] = useState([]);
     const [teams, setTeams] = useState([]);
-    const teamCount = localStorage.getItem("numberOfTeams");
     const location = useLocation();
     const [editingTeam, setEditingTeam] = useState(false)
-    
+    const [editingTeamId, setEditingTeamId] = useState("");
 
     useEffect(() => {
         setTeams(getTeams())
-        setEditingTeam(location.state !== null && "editTeamId" in location.state)
     }, [])
     
     function getTeams() {
         let teamObjects = [];
+        const teamCount = localStorage.getItem("numberOfTeams");
         for (let i = 0; i <= teamCount; i++) { 
             // add the json for each team into array
             // the second part of the array, the id, will be used as key
@@ -34,10 +33,11 @@ function Builder() {
     }
 
     useEffect(() => {
-        if (location.state !== null && "editTeamId" in location.state) {
-            setTeam(JSON.parse(location.state["team"]))
+        // if there is a team to be edited
+        if (editingTeam) {
+            setTeam(JSON.parse(localStorage.getItem(editingTeamId)))
         }
-    }, [location])
+    }, [editingTeamId])
 
     function getTitle() {
         if (editingTeam) return <h1>Edit Team</h1>
@@ -68,7 +68,7 @@ function Builder() {
 
         // do not change teamCount if we are editing a team
         if (editingTeam) {
-            teamId = location.state["editTeamId"]
+            teamId = editingTeamId
             teamCount = +localStorage.getItem("numberOfTeams")
         }
 
@@ -100,7 +100,8 @@ function Builder() {
                 getTeams={getTeams} edit={edit} 
                 saveTeamToLocalStorage={saveTeamToLocalStorage} editingTeam={editingTeam} />
 
-                <TeamList teams={teams} deleteTeam={deleteTeam} />
+                <TeamList teams={teams} deleteTeam={deleteTeam} setEditingTeam={setEditingTeam} 
+                    setEditingTeamId={setEditingTeamId} set/>
             </div>
         </div>
     )

@@ -5,7 +5,9 @@ function TeamList(props) {
         <div className="centered"> 
             {
                 props.teams.map(team => {
-                    return <TeamListing id={team[1]} key={team[1]} team={team[0]} deleteTeam={props.deleteTeam}/>;
+                    return <TeamListing id={team[1]} key={team[1]} team={team[0]} 
+                        deleteTeam={props.deleteTeam} setEditingTeam={props.setEditingTeam} 
+                        setEditingTeamId={props.setEditingTeamId} />;
             })}
         </div>
     )

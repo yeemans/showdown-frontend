@@ -1,6 +1,8 @@
-import {Link} from "react-router-dom"
-
 function TeamListing(props) { 
+    function allowTeamToBeEdited() {
+        props.setEditingTeam(true);
+        props.setEditingTeamId(props.id);
+    }
     return( 
         <div> 
             {
@@ -12,9 +14,8 @@ function TeamListing(props) {
                     )
                 })
             }
-            <Link to="/builder" state={{ editTeamId: props.id, team: JSON.stringify(props.team)}}>
-                Edit
-            </Link>
+
+            <button onClick={() => allowTeamToBeEdited()}>Edit</button>
             <button onClick={() => props.deleteTeam(props.id)}>Delete</button>
         </div>
     )
