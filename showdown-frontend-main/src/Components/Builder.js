@@ -43,8 +43,6 @@ function Builder() {
         let teamId = teamIndex;
         let teamCount;
 
-        console.log(location.state)
-        console.log(teamIndex)
         // do not change teamCount if we are editing a team
         if (location.state !== null && "editTeamId" in location.state) {
             teamId = location.state["editTeamId"]
