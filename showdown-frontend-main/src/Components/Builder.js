@@ -5,7 +5,30 @@ import TeamList from './TeamList';
 
 function Builder() {
     const [team, setTeam] = useState([]);
+    const [teams, setTeams] = useState([]);
+    const teamCount = localStorage.getItem("numberOfTeams");
     const location = useLocation()
+
+    useEffect(() => {
+        setTeams(getTeams())
+    }, [])
+    
+    function getTeams() {
+        let teamObjects = [];
+        for (let i = 0; i <= teamCount; i++) { 
+            // add the json for each team into array
+            // the second part of the array, the id, will be used as key
+            if (localStorage.getItem(`team${i}`) !== null)
+                teamObjects.push([JSON.parse(localStorage.getItem(`team${i}`)), `team${i}`]);
+        }
+        return teamObjects
+    }
+
+    function deleteTeam(team) {
+        // clear from local storage
+        localStorage.removeItem(team)
+        setTeams(getTeams())
+    }
 
     useEffect(() => {
         if (location.state !== null) {
@@ -50,6 +73,7 @@ function Builder() {
         }
 
         else if (teamIndex === undefined) {
+            // increment teamCount to create a unique teamID
             teamCount = +localStorage.getItem("numberOfTeams");
             if (teamCount === null || teamCount === undefined)
                 teamCount = 0
@@ -60,20 +84,20 @@ function Builder() {
             teamId = "team" + teamCount
         }
 
-        // slice the first four characters of teamId to find the number of teams
-        console.log(teamCount + ', ' + teamId)
         window.localStorage.setItem("numberOfTeams", teamCount);
-        console.log("teamcount: " + teamId);
         window.localStorage.setItem(teamId, JSON.stringify(team));
+        // return the saved team and team id for use in save function in teamBar
+        return [team, teamId];
     }
 
     return (
         <div className="Builder">
             {getTitle()}
             <div>
-                <BuildBox save={save} team={team} setTeam={setTeam} 
+                <BuildBox save={save} team={team} setTeam={setTeam} setTeams={setTeams}
+                getTeams={getTeams}
                 edit={edit} saveTeamToLocalStorage={saveTeamToLocalStorage} />
-                <TeamList />
+                <TeamList teams={teams} deleteTeam={deleteTeam} />
             </div>
         </div>
     )

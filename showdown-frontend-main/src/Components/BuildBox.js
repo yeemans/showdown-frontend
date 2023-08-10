@@ -274,7 +274,7 @@ function BuildBox(props) {
         setIsEditing(false);
         let copy = []
         for (let teamMember of props.team) {
-            if (teamMember["pokemon"] != pokemon) 
+            if (teamMember["pokemon"] !== pokemon) 
                 copy.push(teamMember)
         }
 
@@ -297,7 +297,8 @@ function BuildBox(props) {
                 setTeamIndex={setTeamIndex} key={JSON.stringify(props.team)} 
 
                 saveTeamToLocalStorage={props.saveTeamToLocalStorage} 
-                setMessage={setMessage} getPossibleMoves={getPossibleMoves} />
+                setMessage={setMessage} getPossibleMoves={getPossibleMoves} setTeams={props.setTeams} 
+                getTeams={props.getTeams} />
 
             <div>
                 <div className="columns">

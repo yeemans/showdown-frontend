@@ -2,9 +2,16 @@ import FighterBox from "./FighterBox";
 
 function TeamBar(props) { 
     function saveTeam() { 
-        props.saveTeamToLocalStorage(props.team);
+        let team = props.saveTeamToLocalStorage(props.team);
         props.setMessage("Team saved!");
+        let teams = props.getTeams();
+
+        teams.push(team);
+        console.log(teams);
+        props.setTeams(teams);
     } 
+
+
 
     function saveToLocalStorageButton() { 
         if (props.team.length > 0) 

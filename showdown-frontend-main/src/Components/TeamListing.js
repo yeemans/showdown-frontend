@@ -1,10 +1,6 @@
 import {Link} from "react-router-dom"
 
 function TeamListing(props) { 
-    function showTeam() {   
-        console.log(props.team)
-        return
-    }
     return( 
         <div> 
             {
@@ -16,7 +12,6 @@ function TeamListing(props) {
                     )
                 })
             }
-            {showTeam()}
             <Link to="/builder" state={{ editTeamId: props.id, team: JSON.stringify(props.team)}}>
                 Edit
             </Link>
