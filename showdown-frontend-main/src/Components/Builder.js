@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'; 
 import BuildBox from './BuildBox';
 import TeamList from './TeamList';
-import axios from "axios";
 
 function Builder() {
     const [team, setTeam] = useState([]);
@@ -103,6 +102,7 @@ function Builder() {
         let request = await fetch(url)
         let json = await(request.json())
         console.log(json)
+        return json
     }
 
 
@@ -113,16 +113,14 @@ function Builder() {
                 <div class="column">
                     <button onClick={() => setEditingTeam(false)}>Create New Team</button>
                     <BuildBox save={save} team={team} setTeam={setTeam} setTeams={setTeams}
-                    getTeams={getTeams} edit={edit} 
-                    saveTeamToLocalStorage={saveTeamToLocalStorage} editingTeam={editingTeam} />
+                        getTeams={getTeams} edit={edit} saveTeamToLocalStorage={saveTeamToLocalStorage} 
+                        editingTeam={editingTeam} getRecommendation={getRecommendation} />
                 </div>
 
                 <div class="column">
-                    <TeamList teams={teams} deleteTeam={deleteTeam} setEditingTeam={setEditingTeam} 
-                        setEditingTeamId={setEditingTeamId} />
+                    <TeamList teams={teams} deleteTeam={deleteTeam} setTeam={setTeam}
+                        setEditingTeam={setEditingTeam} setEditingTeamId={setEditingTeamId} />
                 </div>
-
-                <button onClick={() => getRecommendation()}>Recommend</button>
             </div>
         </div>
     )

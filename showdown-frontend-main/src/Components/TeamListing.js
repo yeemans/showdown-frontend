@@ -8,6 +8,7 @@ function TeamListing(props) {
         props.deleteTeam(props.id);
         props.setEditingTeam(false);
         props.setEditingTeamId(""); // blank id, no longer editing
+        props.setTeam([]) // clear the team after deleting it
     }
     return( 
         <div> 

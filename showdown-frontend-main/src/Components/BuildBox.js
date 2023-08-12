@@ -5,6 +5,7 @@ import MoveBoxes from "./MoveBoxes";
 import ItemBox from "./ItemBox";
 import PokemonBox from "./PokemonBox";
 import AbilityBox from "./AbilityBox";
+import TeraBox from "./TeraBox";
 import EvBoxes from "./EvBoxes";
 import SaveButton from "./SaveButton";
 import TeamBar from './TeamBar';
@@ -20,6 +21,7 @@ function BuildBox(props) {
     const [abilities, setAbilities] = useState([]);
     const [chosenAbility, setChosenAbility] = useState([]);
     const [errorMessages, setErrorMessages] = useState([]);
+    const [tera, setTera] = useState("Normal")
     const [moves, setMoves] = useState(new Set());
     const [moveSet, setMoveSet] = useState([]);
 
@@ -60,23 +62,23 @@ function BuildBox(props) {
           fetchAllPokemon();
     }, []);
 
-    async function getPokemonImage(id) { 
-        let input = sanitize_text(document.getElementById(id).value);
+    async function getPokemonImage(pokemon) { 
+        let input = sanitize_text(pokemon);
+        console.log(input)
         let url = `https://pokeapi.co/api/v2/pokemon/${input}`.toLowerCase();
-
+        clearFields();
+        setErrorMessages([]);
         try {
-            clearFields();
             let response = await fetch(url);
             let data = await response.json();
+            setPokemonImage(data["sprites"]["front_default"])
 
             updateAbilities(data);
             console.log(data);
-            setPokemonImage(data["sprites"]["front_default"])
             getPossibleMoves(data);
 
-            setErrorMessages([]);
+        
         } catch {
-            clearFields();
             addError("Enter a valid Pokemon name");
             setPokemonImage("logo192.png");
         }
@@ -290,6 +292,12 @@ function BuildBox(props) {
         return <button onClick={() => deletePokemon() }>Delete</button>
     }
 
+    async function addRecToTeam() {
+        let recJson = await(props.getRecommendation())
+        let recommendedPokemon = sanitize_text(recJson["recs"][0])
+        setPokemon(recommendedPokemon)
+        await getPokemonImage(recommendedPokemon)
+    }
     return(
         <div> 
             <SuccessMessage message={message} />
@@ -302,25 +310,30 @@ function BuildBox(props) {
 
             <div>
                 <div className="columns">
-                    <div id="species" className="column is-one-quarter">
+                    <div id="species" className="column is-one-fifth">
                         <PokemonBox updatePokemon={updatePokemon} getImage={getPokemonImage} 
                         image={pokemonImage} pokemon={pokemon} />
                     </div>
 
-                    <div id="item" className="column is-one-quarter flex">
+                    <div id="item" className="column is-one-fifth flex">
                         <ItemBox items={items} itemImage={itemImage} getImage={getItemImage} 
                             setItemName={setItemName} item={itemName} pokemon={pokemon} key={itemName} />
                     </div>
 
-                    <div id="item" className="column is-one-quarter flex">
+                    <div id="ability" className="column is-one-fifth flex">
                         <AbilityBox abilities={abilities} updateAbility={setChosenAbility} pokemon={pokemon} />
                     </div>
 
-                    <div id="moves" className="column is-one-quarter flex">
+                    <div id="tera" className="column is-one-fifth flex">
+                        <TeraBox tera={tera} setTera={setTera} />
+                    </div>
+
+                    <div id="moves" className="column is-one-fifth flex">
                         <div className="floatDownBox">
                             <MoveBoxes hasPokemon={validateHasPokemon} hasMove={validateMove}> </MoveBoxes>
                         </div>
                     </div>
+
                 </div>
             
             
@@ -341,6 +354,7 @@ function BuildBox(props) {
                     setRemainingEvs={updateRemainingEvs} remainingEvs={remainingEvs}
                     addError={addError} deleteError={deleteError} />
                 </div>
+                <button onClick={() => addRecToTeam()}>Recommend</button>
                 {getDeleteButton()}
             </div>
         </div>
