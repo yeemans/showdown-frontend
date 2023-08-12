@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react'; 
 import BuildBox from './BuildBox';
-import { useLocation } from 'react-router-dom'
 import TeamList from './TeamList';
+import axios from "axios";
 
 function Builder() {
     const [team, setTeam] = useState([]);
-    const [teams, setTeams] = useState([]);
-    const location = useLocation();
+    const [teams, setTeams] = useState([]);;
     const [editingTeam, setEditingTeam] = useState(false)
     const [editingTeamId, setEditingTeamId] = useState("");
 
@@ -36,8 +35,10 @@ function Builder() {
         // if there is a team to be edited
         if (editingTeam) {
             setTeam(JSON.parse(localStorage.getItem(editingTeamId)))
+        } else {
+            setTeam([]);
         }
-    }, [editingTeamId])
+    }, [editingTeam, editingTeamId])
 
     function getTitle() {
         if (editingTeam) return <h1>Edit Team</h1>
@@ -90,18 +91,38 @@ function Builder() {
         return [team, teamId];
     }
 
+    async function getRecommendation() {
+        let teamNames = []
+        for (let teamMember of team) {
+            console.log(teamMember)
+            teamNames.push(teamMember["pokemon"])
+        }
+
+        teamNames = JSON.stringify(teamNames)
+        let url = "http://localhost:5000/recommend?team=" + teamNames
+        let request = await fetch(url)
+        let json = await(request.json())
+        console.log(json)
+    }
+
 
     return (
         <div className="Builder">
             {getTitle()}
-            <div>
-                <button onClick={() => setEditingTeam(false)}>Create New Team</button>
-                <BuildBox save={save} team={team} setTeam={setTeam} setTeams={setTeams}
-                getTeams={getTeams} edit={edit} 
-                saveTeamToLocalStorage={saveTeamToLocalStorage} editingTeam={editingTeam} />
+            <div class="columns">
+                <div class="column">
+                    <button onClick={() => setEditingTeam(false)}>Create New Team</button>
+                    <BuildBox save={save} team={team} setTeam={setTeam} setTeams={setTeams}
+                    getTeams={getTeams} edit={edit} 
+                    saveTeamToLocalStorage={saveTeamToLocalStorage} editingTeam={editingTeam} />
+                </div>
 
-                <TeamList teams={teams} deleteTeam={deleteTeam} setEditingTeam={setEditingTeam} 
-                    setEditingTeamId={setEditingTeamId} set/>
+                <div class="column">
+                    <TeamList teams={teams} deleteTeam={deleteTeam} setEditingTeam={setEditingTeam} 
+                        setEditingTeamId={setEditingTeamId} />
+                </div>
+
+                <button onClick={() => getRecommendation()}>Recommend</button>
             </div>
         </div>
     )

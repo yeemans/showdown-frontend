@@ -61,8 +61,7 @@ function FighterBox(props) {
             <div onClick={() => fillInFields(props)}> 
                 <img className="headerImage" src={props["pokemonInfo"]["image"]} 
                     alt={props["pokemonInfo"]["pokemon"]}/>
-                <p>{props["pokemonInfo"]["pokemon"]}</p>
-              
+
             </div>
         </div>
 

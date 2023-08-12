@@ -3,6 +3,12 @@ function TeamListing(props) {
         props.setEditingTeam(true);
         props.setEditingTeamId(props.id);
     }
+
+    function deleteTeam() {
+        props.deleteTeam(props.id);
+        props.setEditingTeam(false);
+        props.setEditingTeamId(""); // blank id, no longer editing
+    }
     return( 
         <div> 
             {
@@ -16,7 +22,7 @@ function TeamListing(props) {
             }
 
             <button onClick={() => allowTeamToBeEdited()}>Edit</button>
-            <button onClick={() => props.deleteTeam(props.id)}>Delete</button>
+            <button onClick={() => deleteTeam()}>Delete</button>
         </div>
     )
 }
