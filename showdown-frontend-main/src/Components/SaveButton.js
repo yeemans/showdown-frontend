@@ -2,7 +2,7 @@ function SaveButton(props) {
     function addToTeam() {
         let info = {"pokemon": props.pokemon, "ability": props.ability, "item": props.item,
                     "moveSet": props.moveSet, "moves": props.moves, "image": props.image, "evs": props.evs,
-                    "abilities": props.abilities, "teamIndex": props.teamIndex};
+                    "abilities": props.abilities, "teamIndex": props.teamIndex, "tera": props.tera};
         props.save(info);
         props.clearFields(); 
         props.resetPokemonAndItem();
@@ -11,7 +11,7 @@ function SaveButton(props) {
     function editPokemon() {
         let info = {"pokemon": props.pokemon, "ability": props.ability, "item": props.item,
                     "moveSet": props.moveSet, "moves": props.moves, "image": props.image, "evs": props.evs,
-                    "abilities": props.abilities, "teamIndex": props.teamIndex};
+                    "abilities": props.abilities, "teamIndex": props.teamIndex, "tera": props.tera};
 
         props.edit(info);
         props.setIsEditing(false);

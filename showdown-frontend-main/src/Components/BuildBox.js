@@ -29,7 +29,6 @@ function BuildBox(props) {
     const [evs, setevs] = useState({"HP": 0 , "Atk": 0, "Def": 0, "SpA": 0, "SpD": 0 , "Spe": 0});
     const [remainingEvs, setRemainingEvs] = useState(510);
 
-    const [isEditing, setIsEditing] = useState(false);
     const [teamIndex, setTeamIndex] = useState(0);
 
     const [message, setMessage] = useState("");
@@ -248,16 +247,16 @@ function BuildBox(props) {
         setAbilities(hash["abilities"]);
         setChosenAbility(hash["ability"]);
 
+        setTera(hash["tera"])
+
         setItemImage(hash["itemImage"]);
         setItemName(hash["item"]);
 
-        console.log(hash["moves"])
         setMoves(hash["moves"]);
         setMoveSet(hash["moveSet"]); 
         
         setevs(hash["evs"]);
         updateRemainingEvs(hash["evs"]);
-
         // delete the name error, since only valid pokemon can be saved
         deleteError("Enter a valid Pokemon name")
     }
@@ -273,7 +272,7 @@ function BuildBox(props) {
     }
 
     function deletePokemon() {
-        setIsEditing(false);
+        props.setIsEditing(false);
         let copy = []
         for (let teamMember of props.team) {
             if (teamMember["pokemon"] !== pokemon) 
@@ -301,7 +300,7 @@ function BuildBox(props) {
     return(
         <div> 
             <SuccessMessage message={message} />
-            <TeamBar team={props.team} autoFill={autoFillFields} setIsEditing={setIsEditing} 
+            <TeamBar team={props.team} autoFill={autoFillFields} setIsEditing={props.setIsEditing} 
                 setTeamIndex={setTeamIndex} key={JSON.stringify(props.team)} 
 
                 saveTeamToLocalStorage={props.saveTeamToLocalStorage} 
@@ -339,10 +338,11 @@ function BuildBox(props) {
             
                 <ErrorList key="test" errors={errorMessages} />
                 <SaveButton team={props.team} setTeam={props.setTeam} save={props.save} pokemon={pokemon}
-                    moves={moves} moveSet={moveSet} ability={chosenAbility} abilities={abilities}
+                    moves={moves} moveSet={moveSet} ability={chosenAbility} tera={tera} 
+                    abilities={abilities}
 
                     item={itemName} image={pokemonImage} evs={evs}
-                    isEditing={isEditing} setIsEditing={setIsEditing} edit={props.edit}
+                    isEditing={props.isEditing} setIsEditing={props.setIsEditing} edit={props.edit}
                     teamIndex={teamIndex}
                     clearFields={clearFields}
                     resetPokemonAndItem={resetPokemonAndItem}

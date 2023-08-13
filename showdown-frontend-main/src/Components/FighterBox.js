@@ -14,18 +14,17 @@ async function fillInFields(props) {
 
     // ping api for possible moves of the pokemon first
     let data = await getPokemonData(info.pokemon)
-    console.log(data)
     let moves = await(props.getPossibleMoves(data))
-    console.log(moves);
-    console.log(info.abiltiies)
 
     let hash = {"pokemon": info.pokemon, "image": info.image, "ability": info.ability, 
     "item": info.item, "abilities": info.abilities, "itemImage": imageURL + info.item + ".png", 
-    "moves": moves, "moveSet": info.moveSet, "evs": info.evs};
-    
+    "moves": moves, "moveSet": info.moveSet, "evs": info.evs, "tera": info.tera};
+    console.log(info);
+
     document.getElementById("speciesInput").value = hash["pokemon"];
     document.getElementById("itemInput").value = hash["item"];
     document.getElementById("abilityInput").value = hash["ability"];
+    document.getElementById("teraInput").value = hash["tera"];
     document.getElementById("itemImage").src = hash["itemImage"];
     document.getElementById("pokemonImage").src = hash["image"];
 

@@ -4,9 +4,10 @@ import TeamList from './TeamList';
 
 function Builder() {
     const [team, setTeam] = useState([]);
-    const [teams, setTeams] = useState([]);;
-    const [editingTeam, setEditingTeam] = useState(false)
+    const [teams, setTeams] = useState([]);
+    const [editingTeam, setEditingTeam] = useState(false);
     const [editingTeamId, setEditingTeamId] = useState("");
+    const [isEditing, setIsEditing] = useState(false);
 
     useEffect(() => {
         setTeams(getTeams())
@@ -114,11 +115,13 @@ function Builder() {
                     <button onClick={() => setEditingTeam(false)}>Create New Team</button>
                     <BuildBox save={save} team={team} setTeam={setTeam} setTeams={setTeams}
                         getTeams={getTeams} edit={edit} saveTeamToLocalStorage={saveTeamToLocalStorage} 
-                        editingTeam={editingTeam} getRecommendation={getRecommendation} />
+                        editingTeam={editingTeam} getRecommendation={getRecommendation} 
+                        isEditing={isEditing} setIsEditing={setIsEditing} />
                 </div>
 
                 <div class="column">
                     <TeamList teams={teams} deleteTeam={deleteTeam} setTeam={setTeam}
+                        isEditing={isEditing} setIsEditing={setIsEditing}
                         setEditingTeam={setEditingTeam} setEditingTeamId={setEditingTeamId} />
                 </div>
             </div>

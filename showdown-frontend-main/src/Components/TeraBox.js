@@ -6,7 +6,7 @@ function TeraBox(props) {
     return(
         <div class="floatDownBox">
             <label htmlFor="teraInput">Tera</label>
-            <select name="teraInput" id="teraInput">
+            <select name="teraInput" id="teraInput" onChange={(e) => props.setTera(e.target.value)}>
                 {types.map(type => {
                     return <option value={type}>{type}</option>
                 })}
