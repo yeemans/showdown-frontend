@@ -2,6 +2,7 @@ import FighterBox from "./FighterBox";
 
 function TeamBar(props) { 
     function saveTeam() { 
+        props.setEditingTeam(false); 
         props.saveTeamToLocalStorage(props.team);
         props.setMessage("Team saved!");
         let teams = props.getTeams();

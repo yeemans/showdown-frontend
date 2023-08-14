@@ -81,7 +81,6 @@ function Builder() {
             else  
                 teamCount++
 
-            console.log(teamCount)
             teamId = "team" + teamCount
         }
 
@@ -115,7 +114,8 @@ function Builder() {
                     <button onClick={() => setEditingTeam(false)}>Create New Team</button>
                     <BuildBox save={save} team={team} setTeam={setTeam} setTeams={setTeams}
                         getTeams={getTeams} edit={edit} saveTeamToLocalStorage={saveTeamToLocalStorage} 
-                        editingTeam={editingTeam} getRecommendation={getRecommendation} 
+                        editingTeam={editingTeam} setEditingTeam={setEditingTeam}
+                        getRecommendation={getRecommendation} 
                         isEditing={isEditing} setIsEditing={setIsEditing} />
                 </div>
 
