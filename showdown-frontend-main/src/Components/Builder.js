@@ -41,8 +41,8 @@ function Builder() {
     }, [editingTeam, editingTeamId])
 
     function getTitle() {
-        if (editingTeam) return <h1>Edit Team</h1>
-        return <h1>Create a Team</h1>
+        if (editingTeam) return <h1>Editing a Team</h1>
+        return <h1>Creating a Team</h1>
     }
 
     function save(pokemonHash) { 

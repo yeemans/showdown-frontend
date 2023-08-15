@@ -7,7 +7,7 @@ import PokemonBox from "./PokemonBox";
 import AbilityBox from "./AbilityBox";
 import TeraBox from "./TeraBox";
 import EvBoxes from "./EvBoxes";
-import SaveButton from "./SaveButton";
+import SaveAndDeleteButtons from "./SaveAndDeleteButtons";
 import TeamBar from './TeamBar';
 import SuccessMessage from './SuccessMessage';
 
@@ -30,8 +30,9 @@ function BuildBox(props) {
     const [remainingEvs, setRemainingEvs] = useState(510);
 
     const [teamIndex, setTeamIndex] = useState(0);
-
     const [message, setMessage] = useState("");
+
+    const [teamIsFull, setTeamIsFull] = useState(false);
 
     useEffect(() => {
         const fetchItems = async() => {
@@ -75,8 +76,6 @@ function BuildBox(props) {
             updateAbilities(data);
             console.log(data);
             getPossibleMoves(data);
-
-        
         } catch {
             addError("Enter a valid Pokemon name");
             setPokemonImage("logo192.png");
@@ -125,7 +124,6 @@ function BuildBox(props) {
             deleteError("Enter a valid Pokemon name")
 
         // get names of all pokemon in team
-
         setPokemon(species)
     }
 
@@ -288,10 +286,11 @@ function BuildBox(props) {
 
     function getDeleteButton() {
         if (!(allPokemon.has(pokemon))) return // return no button, nothing to delete
-        return <button onClick={() => deletePokemon() }>Delete</button>
+        return <button onClick={() => deletePokemon() }>Delete Pokemon</button>
     }
 
     async function addRecToTeam() {
+        props.setIsEditing(false) // add the pokemon to team, not edit
         let recJson = await(props.getRecommendation())
         let recommendedPokemon = sanitize_text(recJson["recs"][0])
         setPokemon(recommendedPokemon)
@@ -299,6 +298,7 @@ function BuildBox(props) {
     }
     return(
         <div> 
+
             <SuccessMessage message={message} />
             <TeamBar team={props.team} autoFill={autoFillFields} setIsEditing={props.setIsEditing} 
                 setTeamIndex={setTeamIndex} key={JSON.stringify(props.team)} 
@@ -306,6 +306,7 @@ function BuildBox(props) {
                 saveTeamToLocalStorage={props.saveTeamToLocalStorage} 
                 setMessage={setMessage} getPossibleMoves={getPossibleMoves} setTeams={props.setTeams} 
                 getTeams={props.getTeams} setEditingTeam={props.setEditingTeam} />
+            <button onClick={() => addRecToTeam()}>Recommend a Team Member</button>
 
             <div>
                 <div className="columns">
@@ -337,7 +338,8 @@ function BuildBox(props) {
             
             
                 <ErrorList key="test" errors={errorMessages} />
-                <SaveButton team={props.team} setTeam={props.setTeam} save={props.save} pokemon={pokemon}
+                <SaveAndDeleteButtons deleteButton={getDeleteButton()}
+                    team={props.team} setTeam={props.setTeam} save={props.save} pokemon={pokemon}
                     moves={moves} moveSet={moveSet} ability={chosenAbility} tera={tera} 
                     abilities={abilities}
 
@@ -354,8 +356,6 @@ function BuildBox(props) {
                     setRemainingEvs={updateRemainingEvs} remainingEvs={remainingEvs}
                     addError={addError} deleteError={deleteError} />
                 </div>
-                <button onClick={() => addRecToTeam()}>Recommend</button>
-                {getDeleteButton()}
             </div>
         </div>
     )
