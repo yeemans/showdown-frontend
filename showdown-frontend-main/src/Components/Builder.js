@@ -98,7 +98,7 @@ function Builder() {
         }
 
         teamNames = JSON.stringify(teamNames)
-        let url = "http://localhost:5000/recommend?team=" + teamNames
+        let url = "https://flask-production-7cbe.up.railway.app/recommend?team=" + teamNames
         let request = await fetch(url)
         let json = await(request.json())
         console.log(json)
@@ -109,8 +109,8 @@ function Builder() {
     return (
         <div className="Builder">
             {getTitle()}
-            <div class="columns">
-                <div class="column">
+            <div className="columns">
+                <div className="column">
                     <button onClick={() => setEditingTeam(false)}>Create New Team</button>
                     <BuildBox save={save} team={team} setTeam={setTeam} setTeams={setTeams}
                         getTeams={getTeams} edit={edit} saveTeamToLocalStorage={saveTeamToLocalStorage} 
@@ -119,7 +119,7 @@ function Builder() {
                         isEditing={isEditing} setIsEditing={setIsEditing} />
                 </div>
 
-                <div class="column">
+                <div className="column">
                     <TeamList teams={teams} deleteTeam={deleteTeam} setTeam={setTeam}
                         isEditing={isEditing} setIsEditing={setIsEditing}
                         setEditingTeam={setEditingTeam} setEditingTeamId={setEditingTeamId} />
