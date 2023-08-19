@@ -32,8 +32,6 @@ function BuildBox(props) {
     const [teamIndex, setTeamIndex] = useState(0);
     const [message, setMessage] = useState("");
 
-    const [teamIsFull, setTeamIsFull] = useState(false);
-
     useEffect(() => {
         const fetchItems = async() => {
             let item_names = []
@@ -330,7 +328,7 @@ function BuildBox(props) {
 
                     <div id="moves" className="column is-one-fifth flex">
                         <div className="floatDownBox">
-                            <MoveBoxes hasPokemon={validateHasPokemon} hasMove={validateMove}> </MoveBoxes>
+                            <MoveBoxes hasPokemon={validateHasPokemon} hasMove={validateMove} moves={Array.from(moves)} />
                         </div>
                     </div>
 
