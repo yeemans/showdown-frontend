@@ -4,11 +4,11 @@ function TeamBar(props) {
     function saveTeam() { 
         props.setEditingTeam(false); 
         props.saveTeamToLocalStorage(props.team);
-        props.setMessage("Team saved!");
         let teams = props.getTeams();
 
         console.log(teams);
         props.setTeams(teams);
+        props.setTeam([]) // reset the team so the user can't save it twice
     } 
 
     function saveToLocalStorageButton() { 

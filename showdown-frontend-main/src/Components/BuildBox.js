@@ -299,7 +299,7 @@ function BuildBox(props) {
 
             <SuccessMessage message={message} />
             <TeamBar team={props.team} autoFill={autoFillFields} setIsEditing={props.setIsEditing} 
-                setTeamIndex={setTeamIndex} key={JSON.stringify(props.team)} 
+                setTeam={props.setTeam} setTeamIndex={setTeamIndex} key={JSON.stringify(props.team)} 
 
                 saveTeamToLocalStorage={props.saveTeamToLocalStorage} 
                 setMessage={setMessage} getPossibleMoves={getPossibleMoves} setTeams={props.setTeams} 
