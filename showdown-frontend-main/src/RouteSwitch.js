@@ -8,8 +8,8 @@ const RouteSwitch = () => {
     <HashRouter>
       <Navbar />
       <Routes>
-        <Route path="/" exact element={<Home />} />
-        <Route path="/builder" exact element={<Builder />} />
+        <Route path="/showdown-frontend" exact element={<Home />} />
+        <Route path="/showdown-frontend/builder" exact element={<Builder />} />
       </Routes>
     </HashRouter>
   );

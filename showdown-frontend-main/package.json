@@ -1,7 +1,7 @@
 {
   "name": "showdown-frontend",
   "version": "0.1.0",
-  "homepage": "https://yeemans.github.io/showdown-frontend/#",
+  "homepage": "https://yeemans.github.io/showdown-frontend",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
