@@ -23,7 +23,7 @@ function BuildBox(props) {
     const [errorMessages, setErrorMessages] = useState([]);
     const [tera, setTera] = useState("Normal")
     const [moves, setMoves] = useState(new Set());
-    const [moveSet, setMoveSet] = useState([]);
+    const [moveSet, setMoveSet] = useState(["", "", "", ""]);
 
     const [items, setItems] = useState(["data"]);
     const [evs, setevs] = useState({"HP": 0 , "Atk": 0, "Def": 0, "SpA": 0, "SpD": 0 , "Spe": 0});
@@ -153,6 +153,7 @@ function BuildBox(props) {
         
         validateDuplicateMoves(addMove(move, id));
     }
+    
 
     function addMove(move, id) {
         let index = ["moveOne", "moveTwo", "moveThree", "moveFour"].indexOf(id);
@@ -164,7 +165,6 @@ function BuildBox(props) {
     }
 
     function validateDuplicateMoves(currentMoveSet) {
-        console.log(currentMoveSet);
         // remove duplicate moves from the input boxes
         let index = 0; 
 
@@ -328,7 +328,8 @@ function BuildBox(props) {
 
                     <div id="moves" className="column is-one-fifth flex">
                         <div className="floatDownBox">
-                            <MoveBoxes hasPokemon={validateHasPokemon} hasMove={validateMove} moves={Array.from(moves)} />
+                            <MoveBoxes hasPokemon={validateHasPokemon} hasMove={validateMove} 
+                            moves={Array.from(moves)} moveSet={moveSet} />
                         </div>
                     </div>
 

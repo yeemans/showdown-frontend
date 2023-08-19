@@ -5,11 +5,14 @@ function moveBoxes(props) {
         props.hasMove(id);
     }
 
-    function getMoveSelect(id) {
+    function getMoveSelect(id, moveIndex) {
+        // insert a blank move to make default value blank instead of a move
+        let copy = [...props.moves]
+        copy.unshift("")
         return(
-            <select id={id} onChange={() => handleChange(id)}> 
-                {props.moves.map(move => {
-                    return <option value={move}>{move}</option>
+            <select id={id} onChange={() => handleChange(id)} value={props.moveSet[moveIndex]}> 
+                {copy.map(move => {
+                    return <option key={id + move} value={move}>{move}</option>
                 })}
             </select>
         )
@@ -18,15 +21,11 @@ function moveBoxes(props) {
     return( 
         <div>
             <h2>Moves</h2>
-            {getMoveSelect("moveOne")}
-            {getMoveSelect("moveTwo")}
-            {getMoveSelect("moveThree")}
-            {getMoveSelect("moveFour")}
+            {getMoveSelect("moveOne", 0)}
+            {getMoveSelect("moveTwo", 1)}
+            {getMoveSelect("moveThree", 2)}
+            {getMoveSelect("moveFour", 3)}
 
-            <input onChange={() => handleChange("moveOne")} type="text" id="moveOne" />
-            <input onChange={() => handleChange("moveTwo")} type="text" id="moveTwo" />
-            <input onChange={() => handleChange("moveThree")} type="text" id="moveThree" />
-            <input onChange={() => handleChange("moveFour")} type="text" id="moveFour" />       
         </div>
     )
 }
