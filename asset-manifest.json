@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/yeemans/showdown-frontend/static/css/main.c5fe119e.css",
-    "main.js": "/yeemans/showdown-frontend/static/js/main.c2bd8fdb.js",
-    "static/js/787.4efb1169.chunk.js": "/yeemans/showdown-frontend/static/js/787.4efb1169.chunk.js",
-    "index.html": "/yeemans/showdown-frontend/index.html",
-    "main.c5fe119e.css.map": "/yeemans/showdown-frontend/static/css/main.c5fe119e.css.map",
-    "main.c2bd8fdb.js.map": "/yeemans/showdown-frontend/static/js/main.c2bd8fdb.js.map",
-    "787.4efb1169.chunk.js.map": "/yeemans/showdown-frontend/static/js/787.4efb1169.chunk.js.map"
+    "main.css": "/showdown-frontend/static/css/main.c5fe119e.css",
+    "main.js": "/showdown-frontend/static/js/main.b9b091e2.js",
+    "static/js/787.4efb1169.chunk.js": "/showdown-frontend/static/js/787.4efb1169.chunk.js",
+    "index.html": "/showdown-frontend/index.html",
+    "main.c5fe119e.css.map": "/showdown-frontend/static/css/main.c5fe119e.css.map",
+    "main.b9b091e2.js.map": "/showdown-frontend/static/js/main.b9b091e2.js.map",
+    "787.4efb1169.chunk.js.map": "/showdown-frontend/static/js/787.4efb1169.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.c5fe119e.css",
-    "static/js/main.c2bd8fdb.js"
+    "static/js/main.b9b091e2.js"
   ]
 }
