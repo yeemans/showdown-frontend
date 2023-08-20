@@ -5,13 +5,13 @@ import Builder from "./Components/Builder";
 
 const RouteSwitch = () => {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Navbar />
       <Routes>
-        <Route path="/showdown-frontend" exact element={<Home />} />
-        <Route path="/showdown-frontend/builder" exact element={<Builder />} />
+        <Route path="/" exact element={<Home />} />
+        <Route path="/builder" exact element={<Builder />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 };
 
